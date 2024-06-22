@@ -9,8 +9,8 @@ export class AlpacaElement extends LitElement {
 
   static styles = [
     css`
-      h3 {
-        color: orange;
+      button {
+        color: green;
       }
     `,
   ];
@@ -25,8 +25,14 @@ export class AlpacaElement extends LitElement {
     this.counter++;
   }
 
+  _title() {
+    // Calling this._increase without parentheses ensures it is not run on page load, but only when the h3 element is clicked
+    return html`<button @click="${this._increase}">Alpaca: ${this.name} - Counter: ${this.counter}</button>`;
+  }
+
   render() {
-    return html`<h3 @click="${this._increase}">Alpaca: ${this.name} - Counter: ${this.counter}</h3>`;
+    // Calling this._title() with parentheses ensures it is run every time the component is rendered, eg by default on page load
+    return html`<div>${this._title()}</div>`;
   }
 }
 
