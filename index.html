@@ -9,7 +9,13 @@
   </head>
   <body>
     <h3 id="anita">Anita is cool</h3>
-    <alpaca-element name="Fluffy"><p>This will appear where I have the slot element in my element</p></alpaca-element>
+    <alpaca-element name="Fluffy">
+      <h3 slot="header">This is the header</h3>
+
+      <p>This will appear where I have the slot element in my element</p>
+
+      <h3 slot="footer">This is the footer</h3>
+    </alpaca-element>
     <script type="module" src="element.js"></script>
   </body>
 </html>
