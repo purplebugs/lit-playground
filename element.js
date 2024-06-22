@@ -12,6 +12,10 @@ export class AlpacaElement extends LitElement {
       button {
         color: green;
       }
+
+      .box {
+        border: 1px solid black;
+      }
     `,
   ];
 
@@ -32,7 +36,13 @@ export class AlpacaElement extends LitElement {
 
   render() {
     // Calling this._title() with parentheses ensures it is run every time the component is rendered, eg by default on page load
-    return html`<div>${this._title()} <slot></slot></div>`;
+    return html`<div class="box">
+      <header><slot name="header"></slot></header>
+
+      <section>${this._title()}<slot></slot></section>
+
+      <footer><slot name="footer"></slot></footer>
+    </div>`;
   }
 }
 
