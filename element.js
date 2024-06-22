@@ -1,4 +1,4 @@
-import { LitElement, html } from "lit";
+import { LitElement, html, css } from "lit";
 console.log("hello world from element.js");
 
 export class AlpacaElement extends LitElement {
@@ -6,6 +6,14 @@ export class AlpacaElement extends LitElement {
     name: { type: String },
     counter: { type: Number },
   };
+
+  static styles = [
+    css`
+      h3 {
+        color: orange;
+      }
+    `,
+  ];
 
   constructor() {
     super();
