@@ -2,10 +2,6 @@
   <head>
     <title>Home</title>
     <style>
-      h3 {
-        color: purple;
-      }
-
       alpaca-map {
         border: 1px solid black;
         width: 100%;
@@ -14,20 +10,8 @@
     </style>
   </head>
   <body>
-    <h3 id="anita">Anita is cool</h3>
-    <alpaca-element name="Fluffy">
-      <h3 slot="header">This is the header</h3>
-
-      <p>This will appear where I have the slot element in my element</p>
-
-      <h3 slot="footer">This is the footer</h3>
-    </alpaca-element>
-
-    <hr\>
-
     <alpaca-map key="AIzaSyB4xD7fB993xNwqzBwF0vFpV3Qg_N9UTTc" centerLat="-33.8688" centerLng="151.2093"></alpaca-map>
 
-    <script type="module" src="element.js"></script>
     <script type="module" src="alpaca-map.js"></script>
   </body>
 </html>
