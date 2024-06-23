@@ -25,8 +25,8 @@ export default class AlpacaMap extends LitElement {
     super();
     this.key;
     this.map;
-    this.centerLat = 64.5783089;
-    this.centerLng = 17.888237;
+    this.centerLat = 60.472;
+    this.centerLng = 8.4689;
     this.farms = [
       { lat: 22, lng: 22 },
       { lat: 63, lng: 103 },
@@ -122,8 +122,19 @@ export default class AlpacaMap extends LitElement {
     });
   }
 
+  _togglePublic() {
+    console.log("Public");
+  }
+
+  _togglePrivate() {
+    console.log("Private");
+  }
+
   render() {
-    return html` <div id="map"></div> `;
+    return html`<div id="search-area">
+        <button @click="${this._togglePublic}">Public</button><button @click="${this._togglePrivate}">Private</button>
+      </div>
+      <div id="map"></div> `;
   }
 }
 
