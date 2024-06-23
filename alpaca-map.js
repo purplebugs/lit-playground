@@ -3,6 +3,8 @@ import { LitElement, html, css } from "lit";
 export default class AlpacaMap extends LitElement {
   static properties = {
     key: { type: String },
+    centerLat: { type: Number },
+    centerLng: { type: Number },
   };
 
   static styles = [
@@ -23,6 +25,8 @@ export default class AlpacaMap extends LitElement {
     super();
     this.key;
     this.map;
+    this.centerLat = 64.5783089;
+    this.centerLng = 17.888237;
   }
 
   // When element is connected to the DOM connectedCallback() is called.
@@ -73,7 +77,8 @@ export default class AlpacaMap extends LitElement {
   // When element has rendered markup in the DOM firstUpdated() is called
   async firstUpdated() {
     // Set default location
-    const position = { lat: 64.5783089, lng: 17.888237 };
+    const position = { lat: this.centerLat, lng: this.centerLng };
+    console.log("position", position);
 
     // Import Google Map scripts so we can use them
     const { Map } = await google.maps.importLibrary("maps");
