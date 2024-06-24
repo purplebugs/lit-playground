@@ -137,15 +137,6 @@ export default class AlpacaMap extends LitElement {
     // Add a marker clusterer to manage the markers.
     new MarkerClusterer({ markers, map });
 
-    /* 
-    locations.forEach((location) => {
-      const marker = new AdvancedMarkerElement({
-        map: this.map,
-        position: location,
-        title: "Alpaca Farm",
-      });
-    }); */
-
     const center = new AdvancedMarkerElement({
       map: this.map,
       position: position,
