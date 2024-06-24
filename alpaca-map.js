@@ -27,11 +27,7 @@ export default class AlpacaMap extends LitElement {
     this.map;
     this.centerLat = 60.472;
     this.centerLng = 8.4689;
-    this.farms = [
-      { lat: 22, lng: 22 },
-      { lat: 63, lng: 103 },
-      { lat: -20, lng: 80 },
-    ];
+    this.farms = [];
   }
 
   // When element is connected to the DOM connectedCallback() is called.
