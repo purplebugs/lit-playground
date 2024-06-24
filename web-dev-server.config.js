@@ -1,8 +1,13 @@
+import { esbuildPlugin } from "@web/dev-server-esbuild";
+
 export default {
-  open: true,
-  watch: true,
-  appIndex: "index.html",
-  nodeResolve: {
-    exportConditions: ["development"],
-  },
+  open: false,
+  debug: true,
+  nodeResolve: true,
+  plugins: [
+    esbuildPlugin({
+      target: "esnext",
+      loaders: { ".js": "ts" },
+    }),
+  ],
 };

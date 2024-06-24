@@ -1,4 +1,5 @@
 import { LitElement, html, css } from "lit";
+import { MarkerClusterer } from "@googlemaps/markerclusterer";
 
 export default class AlpacaMap extends LitElement {
   static properties = {
@@ -79,7 +80,6 @@ export default class AlpacaMap extends LitElement {
   async firstUpdated() {
     async function fetchFarms() {
       // TODO error handling?
-      // TODO is this the correct way to fetch data?
       const response = await fetch("http://localhost:3000/api/companies");
       const farms = await response.json();
       console.log("farms", farms);
@@ -120,13 +120,31 @@ export default class AlpacaMap extends LitElement {
 
     // Place markers on the map
 
+    const markers = locations.map((position) => {
+      const marker = new google.maps.marker.AdvancedMarkerElement({
+        position,
+      });
+
+      // markers can only be keyboard focusable when they have click listeners
+      // open info window when marker is clicked
+      marker.addListener("click", () => {
+        infoWindow.setContent(position.lat + ", " + position.lng);
+        infoWindow.open(map, marker);
+      });
+      return marker;
+    });
+
+    // Add a marker clusterer to manage the markers.
+    new MarkerClusterer({ markers, map });
+
+    /* 
     locations.forEach((location) => {
       const marker = new AdvancedMarkerElement({
         map: this.map,
         position: location,
         title: "Alpaca Farm",
       });
-    });
+    }); */
 
     const center = new AdvancedMarkerElement({
       map: this.map,
