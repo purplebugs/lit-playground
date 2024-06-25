@@ -27,11 +27,7 @@ export default class AlpacaMap extends LitElement {
     this.map;
     this.centerLat = 60.472;
     this.centerLng = 8.4689;
-    this.farms = [
-      { lat: 22, lng: 22 },
-      { lat: 63, lng: 103 },
-      { lat: -20, lng: 80 },
-    ];
+    this.farms = [];
   }
 
   // When element is connected to the DOM connectedCallback() is called.
@@ -81,9 +77,26 @@ export default class AlpacaMap extends LitElement {
 
   // When element has rendered markup in the DOM firstUpdated() is called
   async firstUpdated() {
+    async function fetchFarms() {
+      const response = await fetch("http://localhost:3000/api/companies");
+      const farms = await response.json();
+      console.log("farms", farms);
+
+      return farms?.items || [];
+    }
+
     // Set default location
     const position = { lat: this.centerLat, lng: this.centerLng };
     console.log("position", position);
+
+    // Load data to populate the map
+    const farms = await fetchFarms();
+
+    const locations = farms.map((farm) => {
+      return { lat: farm.lat, lng: farm.lng };
+    });
+
+    console.log("locations", locations);
 
     // Import Google Map scripts so we can use them
     const { Map } = await google.maps.importLibrary("maps");
@@ -107,10 +120,10 @@ export default class AlpacaMap extends LitElement {
 
     // Place markers on the map
 
-    this.farms.forEach((farm) => {
+    locations.forEach((location) => {
       const marker = new AdvancedMarkerElement({
         map: this.map,
-        position: farm,
+        position: location,
         title: "Alpaca Farm",
       });
     });
