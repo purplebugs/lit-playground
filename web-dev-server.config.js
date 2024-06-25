@@ -1,5 +1,5 @@
 export default {
-  open: true,
+  open: false,
   watch: true,
   appIndex: "index.html",
   nodeResolve: {
