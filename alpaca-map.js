@@ -25,8 +25,13 @@ export default class AlpacaMap extends LitElement {
     super();
     this.key;
     this.map;
-    this.centerLat = 64.5783089;
-    this.centerLng = 17.888237;
+    this.centerLat = 60.472;
+    this.centerLng = 8.4689;
+    this.farms = [
+      { lat: 22, lng: 22 },
+      { lat: 63, lng: 103 },
+      { lat: -20, lng: 80 },
+    ];
   }
 
   // When element is connected to the DOM connectedCallback() is called.
@@ -100,11 +105,20 @@ export default class AlpacaMap extends LitElement {
       mapId: "DEMO_MAP_ID",
     });
 
-    // Place a marker
-    const marker = new AdvancedMarkerElement({
+    // Place markers on the map
+
+    this.farms.forEach((farm) => {
+      const marker = new AdvancedMarkerElement({
+        map: this.map,
+        position: farm,
+        title: "Alpaca Farm",
+      });
+    });
+
+    const center = new AdvancedMarkerElement({
       map: this.map,
       position: position,
-      title: "Alpacas",
+      title: "Center",
     });
   }
 
