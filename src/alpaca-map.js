@@ -89,7 +89,7 @@ export default class AlpacaMap extends LitElement {
 
     // Construct the map and adjust what controls to show
     this.map = new Map(el, {
-      zoom: 4,
+      zoom: 12,
       center: position,
       zoomControl: true,
       mapTypeControl: false,
