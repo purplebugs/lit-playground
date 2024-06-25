@@ -23,3 +23,5 @@ Standard build
 ## Run app 🚀
 
 `npm run start`
+
+Navigate to address shown in log
