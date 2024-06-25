@@ -7,16 +7,12 @@ import { rollup } from "rollup";
 const inputOptions = {
   input: ["./src/alpaca-map.js"],
   plugins: [
-    // @ts-ignore
     rollupPluginResolve({ preferBuiltins: true }),
-    // @ts-ignore
     rollupPluginCommonjs({ include: /node_modules/ }),
-    // @ts-ignore
     rollupPluginReplace({
       "process.env.NODE_ENV": JSON.stringify("production"),
       "preventAssignment": true,
     }),
-    // @ts-ignore
     rollupPluginTerser({ format: { comments: false } }),
   ],
 };
