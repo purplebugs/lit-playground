@@ -149,9 +149,31 @@ export default class AlpacaMap extends LitElement {
     this.cluster.addMarkers(markers);
   }
 
-  _togglePublic() {
+  _filterMarkers(element) {
+    const form = new FormData(element.target.parentElement);
+    console.log("element.target.parentElement.id", element.target.parentElement.id);
+
+    console.log("has public", form.has("public"));
+    console.log("has private", form.has("private"));
+
     const markers = this.farms
-      .filter((farm) => farm.public)
+      .filter((farm) => {
+        if (form.has("public") && form.has("private")) {
+          return true;
+        }
+
+        if (!form.has("public") && !form.has("private")) {
+          return false;
+        }
+
+        if (form.has("public") && farm.public) {
+          return true;
+        }
+
+        if (form.has("private") && farm.private) {
+          return true;
+        }
+      })
       .map((farm) => {
         return farm._marker;
       });
@@ -159,13 +181,20 @@ export default class AlpacaMap extends LitElement {
     this.cluster.clearMarkers();
     this.cluster.addMarkers(markers);
 
-    console.log("_togglePublic");
+    console.log(markers.length);
+    console.log("_filterMarkers");
   }
 
   render() {
     return html`
       <header>
-        <button @click="${this._togglePublic}">Toggle public farms</button>
+        <form id="form" @change="${this._filterMarkers}">
+          <input type="checkbox" id="public" name="public" checked />
+          <label for="public">Show public farms</label>
+
+          <input type="checkbox" id="private" name="private" checked />
+          <label for="private">Show private farms</label>
+        </form>
       </header>
       <div id="map"></div>
     `;
