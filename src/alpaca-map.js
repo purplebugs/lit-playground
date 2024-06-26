@@ -94,12 +94,6 @@ export default class AlpacaMap extends LitElement {
     // Load data to populate the map
     this.farms = await fetchFarms();
 
-    /*     const locations = farms.map((farm) => {
-      return { lat: farm?.location?.lat_lng?.lat, lng: farm?.location?.lat_lng?.lng };
-    });
-
-    console.log("locations", locations); */
-
     // Import Google Map scripts so we can use them
     const { Map, InfoWindow } = await google.maps.importLibrary("maps");
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
