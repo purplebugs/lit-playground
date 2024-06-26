@@ -1,6 +1,6 @@
 # Lit Playground ⛹️‍♀️
 
-To try out creating web components using lit
+To try out creating web components using [lit](https://lit.dev/)
 
 ## Audience 🗺️
 
