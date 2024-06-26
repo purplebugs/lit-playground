@@ -91,13 +91,13 @@ export default class AlpacaMap extends LitElement {
     console.log("center", center);
 
     // Load data to populate the map
-    const farms = await fetchFarms();
+    this.farms = await fetchFarms();
 
-    const locations = farms.map((farm) => {
+    /*     const locations = farms.map((farm) => {
       return { lat: farm?.location?.lat_lng?.lat, lng: farm?.location?.lat_lng?.lng };
     });
 
-    console.log("locations", locations);
+    console.log("locations", locations); */
 
     // Import Google Map scripts so we can use them
     const { Map, InfoWindow } = await google.maps.importLibrary("maps");
@@ -126,9 +126,9 @@ export default class AlpacaMap extends LitElement {
 
     // Add markers to the map
 
-    const markers = locations.map((position) => {
+    const markers = this.farms.map((farm) => {
       const marker = new google.maps.marker.AdvancedMarkerElement({
-        position,
+        position: farm.location.lat_lng,
       });
 
       // markers can only be keyboard focusable when they have click listeners
@@ -137,6 +137,9 @@ export default class AlpacaMap extends LitElement {
         infoWindow.setContent(position.lat + ", " + position.lng);
         infoWindow.open(this.map, marker);
       });
+
+      farm._marker = marker;
+
       return marker;
     });
 
