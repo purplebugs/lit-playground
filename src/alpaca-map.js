@@ -1,4 +1,5 @@
 import { LitElement, html, css } from "lit";
+import { MarkerClusterer } from "@googlemaps/markerclusterer";
 
 export default class AlpacaMap extends LitElement {
   static properties = {
@@ -86,8 +87,8 @@ export default class AlpacaMap extends LitElement {
     }
 
     // Set default location
-    const position = { lat: this.centerLat, lng: this.centerLng };
-    console.log("position", position);
+    const center = { lat: this.centerLat, lng: this.centerLng };
+    console.log("center", center);
 
     // Load data to populate the map
     const farms = await fetchFarms();
@@ -99,7 +100,7 @@ export default class AlpacaMap extends LitElement {
     console.log("locations", locations);
 
     // Import Google Map scripts so we can use them
-    const { Map } = await google.maps.importLibrary("maps");
+    const { Map, InfoWindow } = await google.maps.importLibrary("maps");
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
     // Get the element in the shadow DOM to render the map in
@@ -108,31 +109,39 @@ export default class AlpacaMap extends LitElement {
     // Construct the map and adjust what controls to show
     this.map = new Map(el, {
       zoom: 4,
-      center: position,
+      center: center,
       zoomControl: true,
       mapTypeControl: false,
       scaleControl: false,
       streetViewControl: false,
       rotateControl: false,
       fullscreenControl: false,
-      mapId: "DEMO_MAP_ID",
+      mapId: "ALPACA_MAP_ID",
     });
 
-    // Place markers on the map
+    const infoWindow = new google.maps.InfoWindow({
+      content: "",
+      disableAutoPan: true,
+    });
 
-    locations.forEach((location) => {
-      const marker = new AdvancedMarkerElement({
-        map: this.map,
-        position: location,
-        title: "Alpaca Farm",
+    // Add markers to the map
+
+    const markers = locations.map((position) => {
+      const marker = new google.maps.marker.AdvancedMarkerElement({
+        position,
       });
+
+      // markers can only be keyboard focusable when they have click listeners
+      // open info window when marker is clicked
+      marker.addListener("click", () => {
+        infoWindow.setContent(position.lat + ", " + position.lng);
+        infoWindow.open(this.map, marker);
+      });
+      return marker;
     });
 
-    const center = new AdvancedMarkerElement({
-      map: this.map,
-      position: position,
-      title: "Center",
-    });
+    // Add a marker clusterer to manage the markers.
+    new MarkerClusterer({ markers: markers, map: this.map });
   }
 
   render() {
