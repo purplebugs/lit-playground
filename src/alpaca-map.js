@@ -29,6 +29,7 @@ export default class AlpacaMap extends LitElement {
     this.centerLat = 60.472;
     this.centerLng = 8.4689;
     this.farms = [];
+    this.cluster = null;
   }
 
   // When element is connected to the DOM connectedCallback() is called.
@@ -144,11 +145,30 @@ export default class AlpacaMap extends LitElement {
     });
 
     // Add a marker clusterer to manage the markers.
-    new MarkerClusterer({ markers: markers, map: this.map });
+    this.cluster = new MarkerClusterer({ map: this.map });
+    this.cluster.addMarkers(markers);
+  }
+
+  _togglePublic() {
+    const markers = this.farms
+      .filter((farm) => farm.public)
+      .map((farm) => {
+        return farm._marker;
+      });
+
+    this.cluster.clearMarkers();
+    this.cluster.addMarkers(markers);
+
+    console.log("_togglePublic");
   }
 
   render() {
-    return html` <div id="map"></div> `;
+    return html`
+      <header>
+        <button @click="${this._togglePublic}">Toggle public farms</button>
+      </header>
+      <div id="map"></div>
+    `;
   }
 }
 
