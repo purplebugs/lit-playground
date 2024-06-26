@@ -2,12 +2,12 @@
 
 To try out creating web components using lit
 
-## Audience
+## Audience 🗺️
 
 1. For farmers, tourist or travel organisations who want to display the map on their website see the [end users section](#for-end-users)
 1. For developers see the [developer section](#for-developers)
 
-## For end users
+## For end users 🪩
 
 1. Copy and paste the following code on your website
 
@@ -17,7 +17,7 @@ To try out creating web components using lit
 
 `<alpaca-map key="-TODO-" centerLat="-33.8688" centerLng="151.2093"></alpaca-map>`
 
-## For developers
+## For developers 🤖
 
 ### Install app 🪴
 
@@ -25,7 +25,7 @@ To try out creating web components using lit
 
 `npm install`
 
-### API dependencies
+### API dependencies 🔗
 
 Ensure APIs this app depends on are running
 
