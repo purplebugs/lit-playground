@@ -79,7 +79,7 @@ export default class AlpacaMap extends LitElement {
   // When element has rendered markup in the DOM firstUpdated() is called
   async firstUpdated() {
     async function fetchFarms() {
-      const response = await fetch("http://localhost:3000/api/companies");
+      const response = await fetch("http://localhost:3000/api/companies"); // TODO set host to correct environment
       const farms = await response.json();
       console.log("farms", farms);
 

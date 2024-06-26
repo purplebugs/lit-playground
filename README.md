@@ -8,6 +8,12 @@ To try out creating web components using lit
 
 `npm install`
 
+## API dependencies
+
+Ensure APIs this app depends on are running
+
+1. `/api/companies`
+
 ## Develop app 👷‍♀️
 
 - Pre condition: Build the file(s) indicated in [build.js](build.js). Update as required
