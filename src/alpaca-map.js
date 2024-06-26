@@ -94,7 +94,7 @@ export default class AlpacaMap extends LitElement {
     const farms = await fetchFarms();
 
     const locations = farms.map((farm) => {
-      return { lat: farm.lat, lng: farm.lng };
+      return { lat: farm?.location?.lat_lng?.lat, lng: farm?.location?.lat_lng?.lng };
     });
 
     console.log("locations", locations);
