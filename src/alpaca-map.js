@@ -184,10 +184,10 @@ export default class AlpacaMap extends LitElement {
       <header>
         <form id="form" @change="${this._filterMarkers}">
           <input type="checkbox" id="public" name="public" checked />
-          <label for="public">Show public farms</label>
+          <label for="public">Public farms</label>
 
           <input type="checkbox" id="private" name="private" checked />
-          <label for="private">Show private farms</label>
+          <label for="private">Private farms</label>
         </form>
       </header>
       <div id="map"></div>
