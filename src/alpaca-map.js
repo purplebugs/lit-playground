@@ -129,7 +129,7 @@ export default class AlpacaMap extends LitElement {
       // markers can only be keyboard focusable when they have click listeners
       // open info window when marker is clicked
       marker.addListener("click", () => {
-        infoWindow.setContent(position.lat + ", " + position.lng);
+        infoWindow.setContent(farm.location.lat_lng.lat + ", " + farm.location.lat_lng.lng);
         infoWindow.open(this.map, marker);
       });
 
