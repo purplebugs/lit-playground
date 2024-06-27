@@ -29,6 +29,7 @@ export default class AlpacaMap extends LitElement {
     this.centerLat = 60.472;
     this.centerLng = 8.4689;
     this.farms = [];
+    this.cluster = null;
   }
 
   // When element is connected to the DOM connectedCallback() is called.
@@ -91,13 +92,7 @@ export default class AlpacaMap extends LitElement {
     console.log("center", center);
 
     // Load data to populate the map
-    const farms = await fetchFarms();
-
-    const locations = farms.map((farm) => {
-      return { lat: farm?.location?.lat_lng?.lat, lng: farm?.location?.lat_lng?.lng };
-    });
-
-    console.log("locations", locations);
+    this.farms = await fetchFarms();
 
     // Import Google Map scripts so we can use them
     const { Map, InfoWindow } = await google.maps.importLibrary("maps");
@@ -126,9 +121,9 @@ export default class AlpacaMap extends LitElement {
 
     // Add markers to the map
 
-    const markers = locations.map((position) => {
+    const markers = this.farms.map((farm) => {
       const marker = new google.maps.marker.AdvancedMarkerElement({
-        position,
+        position: farm.location.lat_lng,
       });
 
       // markers can only be keyboard focusable when they have click listeners
@@ -137,15 +132,66 @@ export default class AlpacaMap extends LitElement {
         infoWindow.setContent(position.lat + ", " + position.lng);
         infoWindow.open(this.map, marker);
       });
+
+      farm._marker = marker;
+
       return marker;
     });
 
     // Add a marker clusterer to manage the markers.
-    new MarkerClusterer({ markers: markers, map: this.map });
+    this.cluster = new MarkerClusterer({ map: this.map });
+    this.cluster.addMarkers(markers);
+  }
+
+  _filterMarkers(element) {
+    const form = new FormData(element.target.parentElement);
+    console.log("element.target.parentElement.id", element.target.parentElement.id);
+
+    console.log("has public", form.has("public"));
+    console.log("has private", form.has("private"));
+
+    const markers = this.farms
+      .filter((farm) => {
+        if (form.has("public") && form.has("private")) {
+          return true;
+        }
+
+        if (!form.has("public") && !form.has("private")) {
+          return false;
+        }
+
+        if (form.has("public") && farm.public) {
+          return true;
+        }
+
+        if (form.has("private") && farm.private) {
+          return true;
+        }
+      })
+      .map((farm) => {
+        return farm._marker;
+      });
+
+    this.cluster.clearMarkers();
+    this.cluster.addMarkers(markers);
+
+    console.log(markers.length);
+    console.log("_filterMarkers");
   }
 
   render() {
-    return html` <div id="map"></div> `;
+    return html`
+      <header>
+        <form id="form" @change="${this._filterMarkers}">
+          <input type="checkbox" id="public" name="public" checked />
+          <label for="public">Public farms</label>
+
+          <input type="checkbox" id="private" name="private" checked />
+          <label for="private">Private farms</label>
+        </form>
+      </header>
+      <div id="map"></div>
+    `;
   }
 }
 
