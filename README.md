@@ -43,6 +43,10 @@ Standard build
 
 `npm run build`
 
+Format the code
+
+`npm run prettier`
+
 ### Run app 🚀
 
 `npm run start`

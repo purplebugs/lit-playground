@@ -129,7 +129,9 @@ export default class AlpacaMap extends LitElement {
       // markers can only be keyboard focusable when they have click listeners
       // open info window when marker is clicked
       marker.addListener("click", () => {
-        infoWindow.setContent(farm.location.lat_lng.lat + ", " + farm.location.lat_lng.lng);
+        infoWindow.setContent(
+          farm.location.lat_lng.lat + ", " + farm.location.lat_lng.lng
+        );
         infoWindow.open(this.map, marker);
       });
 
@@ -145,7 +147,10 @@ export default class AlpacaMap extends LitElement {
 
   _filterMarkers(element) {
     const form = new FormData(element.target.parentElement);
-    console.log("element.target.parentElement.id", element.target.parentElement.id);
+    console.log(
+      "element.target.parentElement.id",
+      element.target.parentElement.id
+    );
 
     console.log("has public", form.has("public"));
     console.log("has private", form.has("private"));

@@ -31,7 +31,9 @@ export class AlpacaElement extends LitElement {
 
   _title() {
     // Calling this._increase without parentheses ensures it is not run on page load, but only when the h3 element is clicked
-    return html`<button @click="${this._increase}">Alpaca: ${this.name} - Counter: ${this.counter}</button>`;
+    return html`<button @click="${this._increase}">
+      Alpaca: ${this.name} - Counter: ${this.counter}
+    </button>`;
   }
 
   render() {

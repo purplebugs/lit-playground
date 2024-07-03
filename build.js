@@ -11,7 +11,7 @@ const inputOptions = {
     rollupPluginCommonjs({ include: /node_modules/ }),
     rollupPluginReplace({
       "process.env.NODE_ENV": JSON.stringify("production"),
-      "preventAssignment": true,
+      preventAssignment: true,
     }),
     rollupPluginTerser({ format: { comments: false } }),
   ],
