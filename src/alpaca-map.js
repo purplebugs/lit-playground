@@ -1,6 +1,17 @@
 import { LitElement, html, css } from "lit";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 
+function hasSameShallowDataObject(obj1, obj2) {
+  let obj1Keys = Object.keys(obj1);
+
+  if (obj1Keys.length === Object.keys(obj2).length) {
+    return obj1Keys.every(
+      (key) => obj2.hasOwnProperty(key) && obj2[key] === obj1[key]
+    );
+  }
+  return false;
+}
+
 export default class AlpacaMap extends LitElement {
   static properties = {
     key: { type: String },
@@ -152,26 +163,46 @@ export default class AlpacaMap extends LitElement {
       element.target.parentElement.id
     );
 
-    console.log("has public", form.has("public"));
-    console.log("has private", form.has("private"));
+    // Create object from form keys
+    let template = {
+      alpacaSales: form.get("alpacaSales") === "on",
+      alpacaWalking: form.get("alpacaWalking") === "on",
+      bookable: form.get("bookable") === "on",
+      shop: form.get("shop") === "on",
+      overnightStay: form.get("overnightStay") === "on",
+      private: form.get("private") === "on",
+      public: form.get("public") === "on",
+      studServices: form.get("studServices") === "on",
+    };
 
     const markers = this.farms
       .filter((farm) => {
-        if (form.has("public") && form.has("private")) {
+        const template = {
+          public: form.get("public") === "on",
+          private: form.get("private") === "on",
+        };
+
+        if (template?.public && template?.private) {
           return true;
         }
 
-        if (!form.has("public") && !form.has("private")) {
-          return false;
+        const obj = {
+          public: farm?.category?.public,
+          private: farm?.category?.private,
+        };
+
+        return hasSameShallowDataObject(template, obj);
+      })
+      .filter((farm) => {
+        if (form.get("overnightStay") !== "on" && form.get("shop") !== "on") {
+          return;
         }
 
-        if (form.has("public") && farm.public) {
-          return true;
-        }
-
-        if (form.has("private") && farm.private) {
-          return true;
-        }
+        return (
+          (form.get("overnightStay") == "on" &&
+            farm?.category?.overnightStay) ||
+          (form.get("shop") === "on" && farm?.category?.shop)
+        );
       })
       .map((farm) => {
         return farm._marker;
@@ -193,6 +224,24 @@ export default class AlpacaMap extends LitElement {
 
           <input type="checkbox" id="private" name="private" checked />
           <label for="private">Private farms</label>
+
+          <!--   <input type="checkbox" id="alpacaSales" name="alpacaSales" />
+          <label for="alpacaSales">Alpaca sales</label>
+
+          <input type="checkbox" id="alpacaWalking" name="alpacaWalking" />
+          <label for="alpacaWalking">Alpaca walking</label>
+
+          <input type="checkbox" id="bookable" name="bookable" />
+          <label for="bookable">Bookable</label> -->
+
+          <input type="checkbox" id="shop" name="shop" />
+          <label for="shop">Shop</label>
+
+          <input type="checkbox" id="overnightStay" name="overnightStay" />
+          <label for="overnightStay">Overnight stay</label>
+
+          <!--   <input type="checkbox" id="studServices" name="studServices" />
+          <label for="studServices">Stud services</label> -->
         </form>
       </header>
       <div id="map"></div>
