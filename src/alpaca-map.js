@@ -1,24 +1,6 @@
+import { compareExact, compareSparse } from "./utils";
 import { LitElement, html, css } from "lit";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
-
-function compareExact(template, obj) {
-  let templateKeys = Object.keys(template);
-
-  if (templateKeys.length === Object.keys(obj).length) {
-    return templateKeys.every(
-      (key) => obj.hasOwnProperty(key) && obj[key] === template[key]
-    );
-  }
-  return false;
-}
-
-function compareSparse(template, obj) {
-  let templateKeys = Object.keys(template);
-
-  return templateKeys.every(
-    (key) => obj.hasOwnProperty(key) && obj[key] === template[key]
-  );
-}
 
 export default class AlpacaMap extends LitElement {
   static properties = {
