@@ -158,30 +158,14 @@ export default class AlpacaMap extends LitElement {
 
   _filterMarkers(element) {
     const form = new FormData(element.target.parentElement);
-    console.log(
-      "element.target.parentElement.id",
-      element.target.parentElement.id
-    );
 
-    // Create object from form keys
-    let template = {
-      alpacaSales: form.get("alpacaSales") === "on",
-      alpacaWalking: form.get("alpacaWalking") === "on",
-      bookable: form.get("bookable") === "on",
-      shop: form.get("shop") === "on",
-      overnightStay: form.get("overnightStay") === "on",
-      private: form.get("private") === "on",
+    const template = {
       public: form.get("public") === "on",
-      studServices: form.get("studServices") === "on",
+      private: form.get("private") === "on",
     };
 
     const markers = this.farms
       .filter((farm) => {
-        const template = {
-          public: form.get("public") === "on",
-          private: form.get("private") === "on",
-        };
-
         if (template?.public && template?.private) {
           return true;
         }
@@ -194,15 +178,25 @@ export default class AlpacaMap extends LitElement {
         return hasSameShallowDataObject(template, obj);
       })
       .filter((farm) => {
-        if (form.get("overnightStay") !== "on" && form.get("shop") !== "on") {
-          return;
+        if (form.get("overnightStay") === "on") {
+          return farm?.category?.overnightStay;
         }
 
-        return (
-          (form.get("overnightStay") == "on" &&
-            farm?.category?.overnightStay) ||
-          (form.get("shop") === "on" && farm?.category?.shop)
-        );
+        return true;
+      })
+      .filter((farm) => {
+        if (form.get("shop") === "on") {
+          return farm?.category?.shop;
+        }
+
+        return true;
+      })
+      .filter((farm) => {
+        if (form.get("bookable") === "on") {
+          return farm?.category?.bookable;
+        }
+
+        return true;
       })
       .map((farm) => {
         return farm._marker;
@@ -212,7 +206,6 @@ export default class AlpacaMap extends LitElement {
     this.cluster.addMarkers(markers);
 
     console.log(markers.length);
-    console.log("_filterMarkers");
   }
 
   render() {
@@ -229,10 +222,10 @@ export default class AlpacaMap extends LitElement {
           <label for="alpacaSales">Alpaca sales</label>
 
           <input type="checkbox" id="alpacaWalking" name="alpacaWalking" />
-          <label for="alpacaWalking">Alpaca walking</label>
+          <label for="alpacaWalking">Alpaca walking</label> -->
 
           <input type="checkbox" id="bookable" name="bookable" />
-          <label for="bookable">Bookable</label> -->
+          <label for="bookable">Bookable</label>
 
           <input type="checkbox" id="shop" name="shop" />
           <label for="shop">Shop</label>
