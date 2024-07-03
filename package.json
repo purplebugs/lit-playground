@@ -6,6 +6,7 @@
   "scripts": {
     "build:watch": "node --watch-path=./src build.js",
     "build": "node build.js",
+    "prettier": "prettier . --write",
     "start": "node dev-server.js"
   },
   "author": "",
@@ -18,6 +19,7 @@
     "@rollup/plugin-replace": "5.0.7",
     "@rollup/plugin-terser": "0.4.4",
     "fastify": "4.28.0",
+    "prettier": "3.3.2",
     "rollup": "4.18.0"
   },
   "dependencies": {
