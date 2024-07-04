@@ -159,12 +159,9 @@ export default class AlpacaMap extends LitElement {
 
     for (const key of form.keys()) {
       if (key !== "private" && key !== "public") {
-        console.log(key);
         templateSelected[key] = true;
       }
     }
-
-    console.log("templateSelected", templateSelected);
 
     const markers = this.farms
       .filter((farm) => {
@@ -189,7 +186,7 @@ export default class AlpacaMap extends LitElement {
     this.cluster.clearMarkers();
     this.cluster.addMarkers(markers);
 
-    console.log(markers.length);
+    console.log("markers.length", markers.length);
   }
 
   render() {
