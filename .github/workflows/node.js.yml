@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     # Ref: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs#example-using-npm
+    # Did not commit package-lock.json file therefore cannot use `npm ci`
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
