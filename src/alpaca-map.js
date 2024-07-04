@@ -115,7 +115,7 @@ export default class AlpacaMap extends LitElement {
       mapId: "ALPACA_MAP_ID",
     });
 
-    const infoWindow = new google.maps.InfoWindow({
+    const infoWindow = new InfoWindow({
       content: "",
       disableAutoPan: true,
     });
@@ -123,7 +123,7 @@ export default class AlpacaMap extends LitElement {
     // Add markers to the map
 
     const markers = this.farms.map((farm) => {
-      const marker = new google.maps.marker.AdvancedMarkerElement({
+      const marker = new AdvancedMarkerElement({
         position: farm.location.lat_lng,
       });
 
