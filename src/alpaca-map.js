@@ -11,9 +11,9 @@ export default class AlpacaMap extends LitElement {
 
   static styles = [
     css`
+      /* ---- FONTAWESOME START ---- */
       /* Ref: https://docs.fontawesome.com/web/add-icons/pseudo-elements/ */
-      /* Step 1: Common Properties
-  These styles are required to make icons render reliably */
+      /* Step 1: Common Properties - These styles are required to make icons render reliably */
 
       .icon::before {
         display: inline-block;
@@ -63,6 +63,8 @@ export default class AlpacaMap extends LitElement {
         font: var(--fa-font-solid);
         content: "\\f54e";
       }
+
+      /* ---- FONTAWESOME END ---- */
 
       :host {
         display: block;
