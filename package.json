@@ -7,7 +7,8 @@
     "build:watch": "node --watch-path=./src build.js",
     "build": "node build.js",
     "prettier": "prettier . --write",
-    "start": "node dev-server.js"
+    "start": "node dev-server.js",
+    "test": "node --test"
   },
   "author": "",
   "license": "MIT",

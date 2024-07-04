@@ -46,6 +46,11 @@ Standard build
 Format the code
 
 `npm run prettier`
+🧪
+
+### Test app
+
+`npm run test`
 
 ### Run app 🚀
 
