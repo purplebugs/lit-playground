@@ -11,65 +11,9 @@ export default class AlpacaMap extends LitElement {
 
   static styles = [
     css`
-      /* ---- FONTAWESOME START ---- */
-      /* Ref: https://docs.fontawesome.com/web/add-icons/pseudo-elements/ */
-      /* Step 1: Common Properties - These styles are required to make icons render reliably */
-
-      .icon::before {
-        display: inline-block;
-        text-rendering: auto;
-        -webkit-font-smoothing: antialiased;
-      }
-
-      /* Step 2: Reference Individual Icons */
-      /* Note: Make sure to include the correct weight and Unicode value for the icon */
-
-      .bed::before {
-        font: var(--fa-font-solid);
-        content: "\\f236";
-      }
-
-      .calendar-check::before {
-        font: var(--fa-font-solid);
-        content: "\\f274";
-      }
-
-      .house-flag::before {
-        font: var(--fa-font-solid);
-        content: "\\e50d";
-      }
-
-      .handshake::before {
-        font: var(--fa-font-solid);
-        content: "\\f2b5";
-      }
-
-      .key::before {
-        font: var(--fa-font-solid);
-        content: "\\f084";
-      }
-
-      .mars::before {
-        font: var(--fa-font-solid);
-        content: "\\f222";
-      }
-
-      .person-hiking::before {
-        font: var(--fa-font-solid);
-        content: "\\f6ec";
-      }
-
-      .store::before {
-        font: var(--fa-font-solid);
-        content: "\\f54e";
-      }
-
-      /* ---- FONTAWESOME END ---- */
-
       :host {
         display: block;
       }
-
       #map {
         top: 0;
         bottom: 0;
@@ -250,41 +194,28 @@ export default class AlpacaMap extends LitElement {
       <header>
         <form id="form" @change="${this._filterMarkers}">
           <input type="checkbox" id="public" name="public" checked />
-          <label for="public"
-            ><span class="icon house-flag"></span>Public farms</label
-          >
+          <label for="public">Public farms</label>
+
           <input type="checkbox" id="private" name="private" checked />
-          <label for="private"
-            ><span class="icon key"></span>Private farms</label
-          >
+          <label for="private">Private farms</label>
 
           <input type="checkbox" id="alpacaSales" name="alpacaSales" />
-          <label for="alpacaSales"
-            ><span class="icon handshake"></span>Alpaca sales</label
-          >
+          <label for="alpacaSales">Alpaca sales</label>
 
           <input type="checkbox" id="alpacaWalking" name="alpacaWalking" />
-          <label for="alpacaWalking"
-            ><span class="icon person-hiking"></span>Alpaca walking</label
-          >
+          <label for="alpacaWalking">Alpaca walking</label>
 
           <input type="checkbox" id="bookable" name="bookable" />
-          <label for="bookable"
-            ><span class="icon calendar-check"></span>Bookable</label
-          >
+          <label for="bookable">Bookable</label>
 
           <input type="checkbox" id="shop" name="shop" />
-          <label for="shop"><span class="icon store"></span>Shop</label>
+          <label for="shop">Shop</label>
 
           <input type="checkbox" id="overnightStay" name="overnightStay" />
-          <label for="overnightStay"
-            ><span class="icon bed"></span>Overnight stay</label
-          >
+          <label for="overnightStay">Overnight stay</label>
 
           <input type="checkbox" id="studServices" name="studServices" />
-          <label for="studServices"
-            ><span class="icon mars"></span>Stud services</label
-          >
+          <label for="studServices">Stud services</label>
         </form>
       </header>
       <div id="map"></div>
