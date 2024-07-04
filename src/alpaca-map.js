@@ -182,7 +182,6 @@ export default class AlpacaMap extends LitElement {
       .filter((farm) => {
         return compareSparse(templateSelected, farm?.category);
       })
-
       .map((farm) => {
         return farm._marker;
       });
