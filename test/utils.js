@@ -37,7 +37,7 @@ test(`compareSparse() contains equal key, values - return true`, () => {
     studServices: false,
   };
 
-  assert.equal(compareSparse(template, obj), false);
+  assert.equal(compareSparse(template, obj), true);
 });
 
 test(`compareSparse() contains non-equal key, values - return false`, () => {
