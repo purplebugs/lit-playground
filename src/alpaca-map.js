@@ -1,6 +1,7 @@
 import { compareExact, compareSparse } from "./utils";
 import { LitElement, html, css } from "lit";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
+import stylesGoogle from "./styles-google";
 
 export default class AlpacaMap extends LitElement {
   static properties = {
@@ -10,6 +11,7 @@ export default class AlpacaMap extends LitElement {
   };
 
   static styles = [
+    stylesGoogle,
     css`
       /* ---- FONTAWESOME START ---- */
       /* Ref: https://docs.fontawesome.com/web/add-icons/pseudo-elements/ */
