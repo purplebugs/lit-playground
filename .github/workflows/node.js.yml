@@ -13,6 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    # Ref: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs#example-using-npm
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
