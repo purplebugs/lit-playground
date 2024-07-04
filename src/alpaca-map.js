@@ -1,6 +1,7 @@
 import { compareExact, compareSparse } from "./utils";
 import { LitElement, html, css } from "lit";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
+import { iconStyles, iconHouseFlag } from "./svg-icons";
 
 export default class AlpacaMap extends LitElement {
   static properties = {
@@ -10,6 +11,7 @@ export default class AlpacaMap extends LitElement {
   };
 
   static styles = [
+    iconStyles,
     css`
       :host {
         display: block;
@@ -194,7 +196,7 @@ export default class AlpacaMap extends LitElement {
       <header>
         <form id="form" @change="${this._filterMarkers}">
           <input type="checkbox" id="public" name="public" checked />
-          <label for="public">Public farms</label>
+          <label for="public"> ${iconHouseFlag()} Public farms</label>
 
           <input type="checkbox" id="private" name="private" checked />
           <label for="private">Private farms</label>
