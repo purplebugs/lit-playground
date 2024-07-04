@@ -1,6 +1,7 @@
 import { compareExact, compareSparse } from "./utils";
 import { LitElement, html, css } from "lit";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
+import stylesGoogle from "./styles-google";
 import { iconStyles, iconHouseFlag } from "./svg-icons";
 
 export default class AlpacaMap extends LitElement {
@@ -11,6 +12,7 @@ export default class AlpacaMap extends LitElement {
   };
 
   static styles = [
+    stylesGoogle,
     iconStyles,
     css`
       :host {
