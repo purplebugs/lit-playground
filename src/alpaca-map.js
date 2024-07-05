@@ -36,6 +36,21 @@ export default class AlpacaMap extends LitElement {
         padding: 0rem;
       }
 
+      .toggles {
+        /* Ref: https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Grids#the_minmax_function */
+        display: grid;
+        grid-template-columns: repeat(2, minmax(2rem, 1fr));
+        grid-auto-rows: minmax(2rem, auto);
+        gap: 0.25rem;
+
+        /*
+        Ref: https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox#horizontal_and_vertical_alignment
+        
+        display: flex;
+        align-items: center;
+        justify-content: space-around; */
+      }
+
       #map {
         top: 0;
         bottom: 0;
@@ -169,6 +184,7 @@ export default class AlpacaMap extends LitElement {
   }
 
   _filterMarkers(element) {
+    // TODO bugfix to get form directly as added style tags breaks parent logic
     const form = new FormData(element.target.parentElement);
 
     const templatePublicPrivate = {
@@ -215,29 +231,49 @@ export default class AlpacaMap extends LitElement {
     return html`
       <header>
         <form id="form" @change="${this._filterMarkers}">
-          <input type="checkbox" id="public" name="public" checked />
-          <label for="public"> ${iconHouseFlag()} Public farms</label>
+          <div class="toggles">
+            <span>
+              <input type="checkbox" id="public" name="public" checked />
+              <label for="public"> ${iconHouseFlag()} Public farms</label>
+            </span>
 
-          <input type="checkbox" id="private" name="private" checked />
-          <label for="private">${iconKey()}Private farms</label>
+            <span>
+              <input type="checkbox" id="private" name="private" checked />
+              <label for="private">${iconKey()}Private farms</label>
+            </span>
 
-          <input type="checkbox" id="alpacaSales" name="alpacaSales" />
-          <label for="alpacaSales">${iconHandshake()}Alpaca sales</label>
+            <span>
+              <input type="checkbox" id="alpacaSales" name="alpacaSales" />
+              <label for="alpacaSales">${iconHandshake()}Alpaca sales</label>
+            </span>
 
-          <input type="checkbox" id="alpacaWalking" name="alpacaWalking" />
-          <label for="alpacaWalking">${iconPersonHiking()}Alpaca walking</label>
+            <span>
+              <input type="checkbox" id="alpacaWalking" name="alpacaWalking" />
+              <label for="alpacaWalking"
+                >${iconPersonHiking()}Alpaca walking</label
+              >
+            </span>
 
-          <input type="checkbox" id="bookable" name="bookable" />
-          <label for="bookable">${iconCalendarCheck()}Bookable</label>
+            <span>
+              <input type="checkbox" id="bookable" name="bookable" />
+              <label for="bookable">${iconCalendarCheck()}Bookable</label>
+            </span>
 
-          <input type="checkbox" id="shop" name="shop" />
-          <label for="shop">${iconStore()}Shop</label>
+            <span>
+              <input type="checkbox" id="shop" name="shop" />
+              <label for="shop">${iconStore()}Shop</label>
+            </span>
 
-          <input type="checkbox" id="overnightStay" name="overnightStay" />
-          <label for="overnightStay">${iconBed()}Overnight stay</label>
+            <span>
+              <input type="checkbox" id="overnightStay" name="overnightStay" />
+              <label for="overnightStay">${iconBed()}Overnight stay</label>
+            </span>
 
-          <input type="checkbox" id="studServices" name="studServices" />
-          <label for="studServices">${iconMars()} Stud services</label>
+            <span>
+              <input type="checkbox" id="studServices" name="studServices" />
+              <label for="studServices">${iconMars()} Stud services</label>
+            </span>
+          </div>
         </form>
       </header>
       <div id="map"></div>
