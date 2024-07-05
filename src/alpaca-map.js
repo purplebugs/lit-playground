@@ -26,8 +26,16 @@ export default class AlpacaMap extends LitElement {
     iconStyles,
     css`
       :host {
+        /* Ref: https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design#responsive_typography */
+        font-size: calc(1rem + 0.75vw);
+
         display: block;
+        border: 1px solid black;
+        width: auto;
+        height: auto;
+        padding: 0rem;
       }
+
       #map {
         top: 0;
         bottom: 0;

@@ -2,20 +2,28 @@
   <head>
     <title>Home</title>
 
+    <!-- 
+    // USAGE Step 1 - START
+    // Copy / paste the lines below directly inside the <head></head> tag of front page of app
+     -->
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link href="/assets/fonts_google/poppins/fonts.css" rel="stylesheet" />
-    <style>
-      alpaca-map {
-        border: 1px solid black;
-        width: 100%;
-      }
-    </style>
+    <!-- 
+    // USAGE Step 1 - END
+     -->
   </head>
   <body>
     <!-- 
-    // Usage: Set your own farm default as follows
+    // USAGE Step 2 - START
+    // Copy the <alpaca-map ... /> line below and paste into app
+    // To customise with a farm default add centerLat, centerLng as follows:
         <alpaca-map key="AIzaSyB4xD7fB993xNwqzBwF0vFpV3Qg_N9UTTc" centerLat="-33.8688" centerLng="151.2093"></alpaca-map>
      -->
+    <h1>Alpaca Map web component - index.html page header</h1>
     <alpaca-map key="AIzaSyB4xD7fB993xNwqzBwF0vFpV3Qg_N9UTTc"></alpaca-map>
+    <!-- 
+    // USAGE Step 2 - END
+     -->
 
     <script type="module" src="/build/alpaca-map.js"></script>
   </body>
