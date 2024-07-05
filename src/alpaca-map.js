@@ -2,7 +2,17 @@ import { compareExact, compareSparse } from "./utils";
 import { LitElement, html, css } from "lit";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 import stylesGoogle from "./styles-google";
-import { iconStyles, iconHouseFlag } from "./svg-icons";
+import {
+  iconStyles,
+  iconBed,
+  iconCalendarCheck,
+  iconHandshake,
+  iconHouseFlag,
+  iconKey,
+  iconMars,
+  iconPersonHiking,
+  iconStore,
+} from "./svg-icons";
 
 export default class AlpacaMap extends LitElement {
   static properties = {
@@ -201,25 +211,25 @@ export default class AlpacaMap extends LitElement {
           <label for="public"> ${iconHouseFlag()} Public farms</label>
 
           <input type="checkbox" id="private" name="private" checked />
-          <label for="private">Private farms</label>
+          <label for="private">${iconKey()}Private farms</label>
 
           <input type="checkbox" id="alpacaSales" name="alpacaSales" />
-          <label for="alpacaSales">Alpaca sales</label>
+          <label for="alpacaSales">${iconHandshake()}Alpaca sales</label>
 
           <input type="checkbox" id="alpacaWalking" name="alpacaWalking" />
-          <label for="alpacaWalking">Alpaca walking</label>
+          <label for="alpacaWalking">${iconPersonHiking()}Alpaca walking</label>
 
           <input type="checkbox" id="bookable" name="bookable" />
-          <label for="bookable">Bookable</label>
+          <label for="bookable">${iconCalendarCheck()}Bookable</label>
 
           <input type="checkbox" id="shop" name="shop" />
-          <label for="shop">Shop</label>
+          <label for="shop">${iconStore()}Shop</label>
 
           <input type="checkbox" id="overnightStay" name="overnightStay" />
-          <label for="overnightStay">Overnight stay</label>
+          <label for="overnightStay">${iconBed()}Overnight stay</label>
 
           <input type="checkbox" id="studServices" name="studServices" />
-          <label for="studServices">Stud services</label>
+          <label for="studServices">${iconMars()} Stud services</label>
         </form>
       </header>
       <div id="map"></div>
