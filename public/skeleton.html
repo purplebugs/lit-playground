@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <title>Skeleton style</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+      .external-website-container {
+        background-color: lightgray;
+      }
+
+      .web-component-container {
+        font-size: calc(1rem + 0.75vw);
+        display: block;
+        border: 1px solid black;
+      }
+
+      .header-container {
+        background-color: red;
+        height: 10%;
+      }
+
+      span {
+        background-color: pink;
+      }
+
+      .map-container {
+        background-color: lightgreen;
+        height: 50%;
+      }
+
+      #map {
+        top: 0;
+        bottom: 0;
+        height: 100%;
+        width: auto;
+        background-color: darkkhaki;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="external-website-container">
+      <h1>This is the external website content</h1>
+      <p>It contains some info then shows the web component below</p>
+      <section class="web-component-container">
+        <header class="header-container">
+          Header container for holding the search toggles
+          <span>Item one</span>
+          <span>Item two</span>
+          <span>Item three</span>
+        </header>
+        <div class="map-container">
+          <!--           This is a container for holding the map -->
+          <div id="map">My Map goes here</div>
+        </div>
+      </section>
+
+      <p>
+        This is the external website which has content below the web component.
+      </p>
+    </div>
+  </body>
+</html>
