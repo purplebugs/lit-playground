@@ -3,30 +3,37 @@
     <title>Skeleton style</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <style>
+      /* Overall layout */
       .external-website-container {
         background-color: lightgray;
       }
 
       .web-component-container {
         font-size: calc(1rem + 0.75vw);
-        display: block;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
         border: 1px solid black;
+        height: 100%;
       }
 
       .header-container {
         background-color: red;
-        /*       height: 10%; */
-      }
-
-      span {
-        background-color: pink;
       }
 
       .map-container {
         background-color: lightgreen;
-        /*        height: 50%; */
       }
 
+      .footer-container {
+        background-color: purple;
+      }
+
+      /* Toggles */
+      span {
+        background-color: pink;
+      }
+
+      /* Map */
       #map {
         height: 100%;
         width: auto;
@@ -49,6 +56,10 @@
           <!--           This is a container for holding the map -->
           <div id="map">My Map goes here</div>
         </div>
+        <footer class="footer-container">
+          <p>This is the footer for the web component</p>
+          <p>Will have logo and links</p>
+        </footer>
       </section>
 
       <p>
