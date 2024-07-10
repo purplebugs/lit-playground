@@ -75,10 +75,9 @@ export default class AlpacaMap extends LitElement {
       }
 
       #map {
-        top: 0;
-        bottom: 0;
         height: 100%;
-        width: 100%;
+        width: auto;
+        background-color: darkkhaki;
       }
     `,
   ];
