@@ -9,7 +9,7 @@
       }
 
       .web-component-container {
-        font-size: calc(1rem + 0.75vw);
+        /*         font-size: calc(1em + 0.5vw); */
         display: grid;
         grid-template-rows: auto 1fr auto;
         border: 1px solid black;
@@ -17,7 +17,8 @@
       }
 
       .header-container {
-        background-color: red;
+        background-color: lightcoral;
+        padding: 0.5em;
       }
 
       .map-container {
@@ -29,6 +30,38 @@
       }
 
       /* Toggles */
+
+      .toggle-group {
+        /*
+        Ref: https://web.dev/articles/one-line-layouts#07_ram_repeat_auto_minmax_grid-template-columnsauto-fit_minmaxbase_1fr 
+        */
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(5em, 1fr));
+        grid-gap: 0.5em;
+      }
+
+      .toggle {
+        /*
+        Ref: https://web.dev/articles/one-line-layouts#08_line_up_justify-content_space-between
+        */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 0.5em;
+
+        background-color: antiquewhite;
+
+        div {
+          margin: 0.25em;
+        }
+      }
+
+      .icon {
+        font-size: calc(1em + 0.75vh);
+        /*   height: 7em; */
+        width: 100%;
+      }
+
       span {
         background-color: pink;
       }
@@ -47,10 +80,66 @@
       <p>It contains some info then shows the web component below</p>
       <section class="web-component-container">
         <header class="header-container">
-          Header container for holding the search toggles
-          <span>Item one</span>
-          <span>Item two</span>
-          <span>Item three</span>
+          <p>Header container for holding the search toggles</p>
+          <div class="toggle-group">
+            <div class="toggle">
+              <div>Checkbox</div>
+              <div>Public farms</div>
+              <div class="icon">🦙</div>
+            </div>
+            <div class="toggle">
+              <div>Checkbox</div>
+              <div>Overnight stay and more text here</div>
+              <div class="icon">🛌</div>
+            </div>
+            <div class="toggle">
+              <div>Checkbox</div>
+              <div>Alpaca sales</div>
+              <div class="icon">🤝</div>
+            </div>
+
+            <div class="toggle">
+              <div>Checkbox</div>
+              <div>Public farms</div>
+              <div class="icon">🦙</div>
+            </div>
+            <div class="toggle">
+              <div>Checkbox</div>
+              <div>Overnight stay and more text here</div>
+              <div class="icon">🛌</div>
+            </div>
+            <div class="toggle">
+              <div>Checkbox</div>
+              <div>Alpaca sales</div>
+              <div class="icon">🤝</div>
+            </div>
+
+            <div class="toggle">
+              <div>Checkbox</div>
+              <div>Public farms</div>
+              <div class="icon">🦙</div>
+            </div>
+            <div class="toggle">
+              <div>Checkbox</div>
+              <div>Overnight stay and more text here</div>
+              <div class="icon">🛌</div>
+            </div>
+            <div class="toggle">
+              <div>Checkbox</div>
+              <div>Alpaca sales</div>
+              <div class="icon">🤝</div>
+            </div>
+
+            <!--             <span>Item one</span>
+            <span>Item two</span>
+            <span>Item three</span>
+            <span>Item four</span>
+            <span>Item five</span>
+            <span>Item six</span>
+            <span>Item seven</span>
+            <span>Item eight</span>
+            <span>Item nine</span> -->
+          </div>
         </header>
         <div class="map-container">
           <!--           This is a container for holding the map -->
