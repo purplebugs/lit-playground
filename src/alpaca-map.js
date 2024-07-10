@@ -25,14 +25,59 @@ export default class AlpacaMap extends LitElement {
     stylesGoogle,
     iconStyles,
     css`
+      /* Overall layout */
+
       :host {
-        display: block;
+        /* Ref: https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design#responsive_typography */
+        /* font-size: calc(1.5rem + 3vw); */
+
+        /* Sets a min font size, ie the max of the two values, so sets a floor for the size */
+        /*         
+        font-size: max(5vw, 10px); 
+        */
       }
+
+      .web-component-container {
+        border: 1px solid black;
+      }
+
+      .header-container {
+        background-color: lightcoral;
+        padding: 0.5em;
+      }
+
+      .map-container {
+        background-color: lightgreen;
+      }
+
+      .footer-container {
+        background-color: purple;
+
+        p {
+          margin: 0px;
+        }
+      }
+
+      /* Toggles */
+
+      .toggle-group {
+        /* Scroll across for more toggles*/
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow: auto;
+      }
+
+      .toggle {
+        background-color: orange;
+        border: solid #5b6dcd 10px;
+        padding: 5px;
+      }
+
       #map {
-        top: 0;
-        bottom: 0;
         height: 100%;
-        width: 100%;
+        width: auto;
+        background-color: darkkhaki;
       }
     `,
   ];
@@ -122,10 +167,10 @@ export default class AlpacaMap extends LitElement {
       center: center,
       zoomControl: true,
       mapTypeControl: false,
-      scaleControl: false,
-      streetViewControl: false,
-      rotateControl: false,
-      fullscreenControl: false,
+      scaleControl: true,
+      streetViewControl: true,
+      rotateControl: true,
+      fullscreenControl: true,
       mapId: "ALPACA_MAP_ID",
     });
 
@@ -161,7 +206,7 @@ export default class AlpacaMap extends LitElement {
   }
 
   _filterMarkers(element) {
-    const form = new FormData(element.target.parentElement);
+    const form = new FormData(element.currentTarget);
 
     const templatePublicPrivate = {
       public: form.get("public") === "on",
@@ -205,34 +250,72 @@ export default class AlpacaMap extends LitElement {
 
   render() {
     return html`
-      <header>
-        <form id="form" @change="${this._filterMarkers}">
-          <input type="checkbox" id="public" name="public" checked />
-          <label for="public"> ${iconHouseFlag()} Public farms</label>
+      <section class="web-component-container">
+        <header class="header-container">
+          <p>Header container for holding the search toggles</p>
 
-          <input type="checkbox" id="private" name="private" checked />
-          <label for="private">${iconKey()}Private farms</label>
+          <form id="form" @change="${this._filterMarkers}">
+            <div class="toggle-group">
+              <span class="toggle">
+                <input type="checkbox" id="public" name="public" checked />
+                <label for="public"> ${iconHouseFlag()} Public farms</label>
+              </span>
 
-          <input type="checkbox" id="alpacaSales" name="alpacaSales" />
-          <label for="alpacaSales">${iconHandshake()}Alpaca sales</label>
+              <span class="toggle">
+                <input type="checkbox" id="private" name="private" checked />
+                <label for="private">${iconKey()}Private farms</label>
+              </span>
 
-          <input type="checkbox" id="alpacaWalking" name="alpacaWalking" />
-          <label for="alpacaWalking">${iconPersonHiking()}Alpaca walking</label>
+              <span class="toggle">
+                <input type="checkbox" id="alpacaSales" name="alpacaSales" />
+                <label for="alpacaSales">${iconHandshake()}Alpaca sales</label>
+              </span>
 
-          <input type="checkbox" id="bookable" name="bookable" />
-          <label for="bookable">${iconCalendarCheck()}Bookable</label>
+              <span class="toggle">
+                <input
+                  type="checkbox"
+                  id="alpacaWalking"
+                  name="alpacaWalking"
+                />
+                <label for="alpacaWalking"
+                  >${iconPersonHiking()}Alpaca walking</label
+                >
+              </span>
 
-          <input type="checkbox" id="shop" name="shop" />
-          <label for="shop">${iconStore()}Shop</label>
+              <span class="toggle">
+                <input type="checkbox" id="bookable" name="bookable" />
+                <label for="bookable">${iconCalendarCheck()}Bookable</label>
+              </span>
 
-          <input type="checkbox" id="overnightStay" name="overnightStay" />
-          <label for="overnightStay">${iconBed()}Overnight stay</label>
+              <span class="toggle">
+                <input type="checkbox" id="shop" name="shop" />
+                <label for="shop">${iconStore()}Shop</label>
+              </span>
 
-          <input type="checkbox" id="studServices" name="studServices" />
-          <label for="studServices">${iconMars()} Stud services</label>
-        </form>
-      </header>
-      <div id="map"></div>
+              <span class="toggle">
+                <input
+                  type="checkbox"
+                  id="overnightStay"
+                  name="overnightStay"
+                />
+                <label for="overnightStay">${iconBed()}Overnight stay</label>
+              </span>
+
+              <span class="toggle">
+                <input type="checkbox" id="studServices" name="studServices" />
+                <label for="studServices">${iconMars()} Stud services</label>
+              </span>
+            </div>
+          </form>
+        </header>
+        <div class="map-container">
+          <div id="map"></div>
+        </div>
+        <footer class="footer-container">
+          <p>This is the footer for the web component</p>
+          <p>Will have logo and links</p>
+        </footer>
+      </section>
     `;
   }
 }
