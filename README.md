@@ -9,13 +9,24 @@ To try out creating web components using [lit](https://lit.dev/)
 
 ## For end users 🪩
 
-1. Copy and paste the following code on your website
+1. Copy and paste the lines below directly inside the `<head></head>` tag of website
 
-`<alpaca-map key="-TODO-"></alpaca-map>`
+   ```
+   <meta name="viewport" content="width=device-width,initial-scale=1" />
+   <link href="/assets/fonts_google/poppins/fonts.css" rel="stylesheet" />
+   ```
 
-1. Optional. To center the map on your favourite farm, replace the latitude and longitude with your coordinates
+1. Copy and paste the following code inside the `<body></body>` tag of website where the component should appear
 
-`<alpaca-map key="-TODO-" centerLat="-33.8688" centerLng="151.2093"></alpaca-map>`
+   ```
+   <alpaca-map key="-TODO-"></alpaca-map>
+   ```
+
+1. Optional. To center the map on a favourite farm, replace the latitude and longitude with its `centerLat` and `centerLng` coordinates
+
+   ```
+   <alpaca-map key="-TODO-" centerLat="-33.8688" centerLng="151.2093"></alpaca-map>
+   ```
 
 ## For developers 🤖
 
