@@ -42,7 +42,7 @@ export default class AlpacaMap extends LitElement {
       }
 
       .header-container {
-        background-color: lightcoral;
+        background-color: white;
         padding: 0.5em;
       }
 
@@ -60,24 +60,52 @@ export default class AlpacaMap extends LitElement {
 
       /* Toggles */
 
+      form {
+        margin: 0;
+        padding: 0;
+      }
+
       .toggle-group {
         /* Scroll across for more toggles*/
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         overflow: auto;
+
+        width: 100%;
+        box-sizing: border-box;
       }
 
       .toggle {
-        background-color: orange;
-        border: solid #5b6dcd 10px;
-        padding: 5px;
+        color: #006ce4;
+        background-color: rgba(0, 108, 228, 0.14);
+        border: solid #006ce4 0.15em;
+
+        border-radius: 10em;
+        padding: 0.5em;
+        margin: 0.25em;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        label {
+          white-space: nowrap;
+        }
+
+        svg path {
+          fill: currentcolor;
+        }
       }
+
+      /*       path {
+        fill: orange;
+      } */
 
       #map {
         height: 100%;
         width: auto;
-        background-color: darkkhaki;
+        background-color: #a7cdf2;
       }
     `,
   ];
@@ -252,8 +280,6 @@ export default class AlpacaMap extends LitElement {
     return html`
       <section class="web-component-container">
         <header class="header-container">
-          <p>Header container for holding the search toggles</p>
-
           <form id="form" @change="${this._filterMarkers}">
             <div class="toggle-group">
               <span class="toggle">
