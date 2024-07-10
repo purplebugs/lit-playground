@@ -1,6 +1,11 @@
 <html>
   <head>
     <title>Home</title>
+    <style>
+      .external-website-container {
+        background-color: lightgray;
+      }
+    </style>
 
     <!-- 
     // USAGE Step 1 - START
@@ -13,17 +18,26 @@
      -->
   </head>
   <body>
-    <!-- 
+    <div class="external-website-container">
+      <h1>Alpaca Map web component - index.html page header</h1>
+      <p>This is the external website content</p>
+      <p>It contains some info then shows the web component below</p>
+      <!-- 
     // USAGE Step 2 - START
     // Copy the <alpaca-map ... /> line below and paste into app
     // To customise with a farm default add centerLat, centerLng as follows:
         <alpaca-map key="AIzaSyB4xD7fB993xNwqzBwF0vFpV3Qg_N9UTTc" centerLat="-33.8688" centerLng="151.2093"></alpaca-map>
      -->
-    <h1>Alpaca Map web component - index.html page header</h1>
-    <alpaca-map key="AIzaSyB4xD7fB993xNwqzBwF0vFpV3Qg_N9UTTc"></alpaca-map>
-    <!-- 
+
+      <alpaca-map key="AIzaSyB4xD7fB993xNwqzBwF0vFpV3Qg_N9UTTc"></alpaca-map>
+      <!-- 
     // USAGE Step 2 - END
      -->
+
+      <p>
+        This is the external website which has content below the web component.
+      </p>
+    </div>
 
     <script type="module" src="/build/alpaca-map.js"></script>
   </body>

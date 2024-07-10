@@ -25,16 +25,35 @@ export default class AlpacaMap extends LitElement {
     stylesGoogle,
     iconStyles,
     css`
+      /* Overall layout */
+
       :host {
         /* Ref: https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design#responsive_typography */
-        font-size: calc(1rem + 0.75vw);
-
-        display: block;
-        border: 1px solid black;
-        width: auto;
-        height: auto;
-        padding: 0rem;
+        /* font-size: calc(1rem + 0.75vw); */
       }
+
+      .web-component-container {
+        border: 1px solid black;
+      }
+
+      .header-container {
+        background-color: lightcoral;
+        padding: 0.5em;
+      }
+
+      .map-container {
+        background-color: lightgreen;
+      }
+
+      .footer-container {
+        background-color: purple;
+
+        p {
+          margin: 0px;
+        }
+      }
+
+      /* Toggles */
 
       .toggle-group {
         /* Ref: https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Grids#the_minmax_function
@@ -59,10 +78,8 @@ export default class AlpacaMap extends LitElement {
 
       .toggle {
         background-color: orange;
-        box-sizing: border-box;
         border: solid #5b6dcd 10px;
         padding: 5px;
-        width: 100%;
       }
 
       #map {
@@ -159,10 +176,10 @@ export default class AlpacaMap extends LitElement {
       center: center,
       zoomControl: true,
       mapTypeControl: false,
-      scaleControl: false,
-      streetViewControl: false,
-      rotateControl: false,
-      fullscreenControl: false,
+      scaleControl: true,
+      streetViewControl: true,
+      rotateControl: true,
+      fullscreenControl: true,
       mapId: "ALPACA_MAP_ID",
     });
 
@@ -242,54 +259,72 @@ export default class AlpacaMap extends LitElement {
 
   render() {
     return html`
-      <header>
-        <form id="form" @change="${this._filterMarkers}">
-          <div class="toggle-group">
-            <span class="toggle">
-              <input type="checkbox" id="public" name="public" checked />
-              <label for="public"> ${iconHouseFlag()} Public farms</label>
-            </span>
+      <section class="web-component-container">
+        <header class="header-container">
+          <p>Header container for holding the search toggles</p>
 
-            <span class="toggle">
-              <input type="checkbox" id="private" name="private" checked />
-              <label for="private">${iconKey()}Private farms</label>
-            </span>
+          <form id="form" @change="${this._filterMarkers}">
+            <div class="toggle-group">
+              <span class="toggle">
+                <input type="checkbox" id="public" name="public" checked />
+                <label for="public"> ${iconHouseFlag()} Public farms</label>
+              </span>
 
-            <span class="toggle">
-              <input type="checkbox" id="alpacaSales" name="alpacaSales" />
-              <label for="alpacaSales">${iconHandshake()}Alpaca sales</label>
-            </span>
+              <span class="toggle">
+                <input type="checkbox" id="private" name="private" checked />
+                <label for="private">${iconKey()}Private farms</label>
+              </span>
 
-            <span class="toggle">
-              <input type="checkbox" id="alpacaWalking" name="alpacaWalking" />
-              <label for="alpacaWalking"
-                >${iconPersonHiking()}Alpaca walking</label
-              >
-            </span>
+              <span class="toggle">
+                <input type="checkbox" id="alpacaSales" name="alpacaSales" />
+                <label for="alpacaSales">${iconHandshake()}Alpaca sales</label>
+              </span>
 
-            <span class="toggle">
-              <input type="checkbox" id="bookable" name="bookable" />
-              <label for="bookable">${iconCalendarCheck()}Bookable</label>
-            </span>
+              <span class="toggle">
+                <input
+                  type="checkbox"
+                  id="alpacaWalking"
+                  name="alpacaWalking"
+                />
+                <label for="alpacaWalking"
+                  >${iconPersonHiking()}Alpaca walking</label
+                >
+              </span>
 
-            <span class="toggle">
-              <input type="checkbox" id="shop" name="shop" />
-              <label for="shop">${iconStore()}Shop</label>
-            </span>
+              <span class="toggle">
+                <input type="checkbox" id="bookable" name="bookable" />
+                <label for="bookable">${iconCalendarCheck()}Bookable</label>
+              </span>
 
-            <span class="toggle">
-              <input type="checkbox" id="overnightStay" name="overnightStay" />
-              <label for="overnightStay">${iconBed()}Overnight stay</label>
-            </span>
+              <span class="toggle">
+                <input type="checkbox" id="shop" name="shop" />
+                <label for="shop">${iconStore()}Shop</label>
+              </span>
 
-            <span class="toggle">
-              <input type="checkbox" id="studServices" name="studServices" />
-              <label for="studServices">${iconMars()} Stud services</label>
-            </span>
-          </div>
-        </form>
-      </header>
-      <div id="map"></div>
+              <span class="toggle">
+                <input
+                  type="checkbox"
+                  id="overnightStay"
+                  name="overnightStay"
+                />
+                <label for="overnightStay">${iconBed()}Overnight stay</label>
+              </span>
+
+              <span class="toggle">
+                <input type="checkbox" id="studServices" name="studServices" />
+                <label for="studServices">${iconMars()} Stud services</label>
+              </span>
+            </div>
+          </form>
+        </header>
+        <div class="map-container">
+          <div id="map"></div>
+        </div>
+        <footer class="footer-container">
+          <p>This is the footer for the web component</p>
+          <p>Will have logo and links</p>
+        </footer>
+      </section>
     `;
   }
 }
