@@ -184,8 +184,7 @@ export default class AlpacaMap extends LitElement {
   }
 
   _filterMarkers(element) {
-    // TODO bugfix to get form directly as added style tags breaks parent logic
-    const form = new FormData(element.target.parentElement);
+    const form = new FormData(element.currentTarget);
 
     const templatePublicPrivate = {
       public: form.get("public") === "on",
