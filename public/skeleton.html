@@ -10,8 +10,10 @@
 
       .web-component-container {
         /*         font-size: calc(1em + 0.5vw); */
+        /*         
         display: grid;
-        grid-template-rows: auto 1fr auto;
+        grid-template-rows: auto 1fr auto; 
+        */
         border: 1px solid black;
         height: 100%;
       }
@@ -27,6 +29,10 @@
 
       .footer-container {
         background-color: purple;
+
+        p {
+          margin: 0px;
+        }
       }
 
       /* Toggles */
@@ -35,9 +41,17 @@
         /*
         Ref: https://web.dev/articles/one-line-layouts#07_ram_repeat_auto_minmax_grid-template-columnsauto-fit_minmaxbase_1fr 
         */
+        /* 
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(5em, 1fr));
         grid-gap: 0.5em;
+         */
+
+        /* Scroll across for more toggles*/
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow: auto;
       }
 
       .toggle {
@@ -129,16 +143,6 @@
               <div>Alpaca sales</div>
               <div class="icon">🤝</div>
             </div>
-
-            <!--             <span>Item one</span>
-            <span>Item two</span>
-            <span>Item three</span>
-            <span>Item four</span>
-            <span>Item five</span>
-            <span>Item six</span>
-            <span>Item seven</span>
-            <span>Item eight</span>
-            <span>Item nine</span> -->
           </div>
         </header>
         <div class="map-container">
