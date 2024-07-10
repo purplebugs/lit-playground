@@ -29,7 +29,12 @@ export default class AlpacaMap extends LitElement {
 
       :host {
         /* Ref: https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design#responsive_typography */
-        /* font-size: calc(1rem + 0.75vw); */
+        /* font-size: calc(1.5rem + 3vw); */
+
+        /* Sets a min font size, ie the max of the two values, so sets a floor for the size */
+        /*         
+        font-size: max(5vw, 10px); 
+        */
       }
 
       .web-component-container {
@@ -56,19 +61,6 @@ export default class AlpacaMap extends LitElement {
       /* Toggles */
 
       .toggle-group {
-        /* Ref: https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Grids#the_minmax_function
-        display: grid;
-        grid-template-columns: repeat(2, minmax(2rem, 1fr));
-        grid-auto-rows: minmax(2rem, auto);
-        gap: 0.25rem;*/
-
-        /*
-        Ref: https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox#horizontal_and_vertical_alignment
-        
-        display: flex;
-        align-items: center;
-        justify-content: space-around; */
-
         /* Scroll across for more toggles*/
         display: flex;
         flex-direction: row;
