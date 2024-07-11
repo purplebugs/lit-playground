@@ -117,12 +117,9 @@ export default class AlpacaMap extends LitElement {
 
         input:checked {
           outline: 0.1em solid white;
+          accent-color: red;
         }
       }
-
-      /*       path {
-        fill: orange;
-      } */
 
       #map {
         height: 100%;
