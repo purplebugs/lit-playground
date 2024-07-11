@@ -35,6 +35,29 @@ export default class AlpacaMap extends LitElement {
         /*         
         font-size: max(5vw, 10px); 
         */
+
+        /* alpaca.life logo colours */
+        --hex-dark-blue: #285dab;
+        --rgb-dark-blue: 40 93 171;
+        --dark-blue: rgb(var(--rgb-dark-blue));
+
+        --hex-pale-blue: #3d78ce;
+        --rgb-pale-blue: 61, 120, 206;
+        --pale-blue: rgb(var(--rgb-pale-blue));
+
+        --hex-yellow: #edbb34;
+        --rgb-yellow: 237 187 52;
+        --yellow: rgb(var(--rgb-yellow));
+
+        --hex-pink: #ed87a1;
+        --rgb-pink: 237 135 161;
+        --pink: rgb(var(--rgb-pink));
+
+        /* From me */
+        --almost-black: #333333;
+        --grey: #666666;
+
+        color: var(--almost-black);
       }
 
       .web-component-container {
@@ -71,10 +94,21 @@ export default class AlpacaMap extends LitElement {
         }
 
         #ko-fi {
-          border: 1px solid black;
+          border: solid var(--pink) 0.15em;
           border-radius: 10em;
-          border-color: #ed87a1;
         }
+      }
+
+      /********* Links *********/
+
+      a {
+        color: var(--dark-blue);
+      }
+
+      a:hover {
+        color: var(--pale-blue);
+        text-decoration: underline;
+        text-decoration-thickness: 0.5em;
       }
 
       /********* Toggles *********/
@@ -145,7 +179,7 @@ export default class AlpacaMap extends LitElement {
       #map {
         height: 100%;
         width: auto;
-        background-color: #a7cdf2;
+        background-color: var(--pale-blue);
       }
     `,
   ];
