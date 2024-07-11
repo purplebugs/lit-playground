@@ -92,6 +92,13 @@ export default class AlpacaMap extends LitElement {
 
         label {
           white-space: nowrap;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .icon {
+          padding: 0 0.1em 0 0.1em;
         }
 
         svg {
@@ -299,17 +306,17 @@ export default class AlpacaMap extends LitElement {
             <div class="toggle-group">
               <span class="toggle">
                 <input type="checkbox" id="public" name="public" checked />
-                <label for="public"> ${iconHouseFlag()} Public farms</label>
+                <label for="public"> ${iconHouseFlag()}Public farms</label>
               </span>
 
               <span class="toggle">
                 <input type="checkbox" id="private" name="private" checked />
-                <label for="private">${iconKey()} Private farms</label>
+                <label for="private">${iconKey()}Private farms</label>
               </span>
 
               <span class="toggle">
                 <input type="checkbox" id="alpacaSales" name="alpacaSales" />
-                <label for="alpacaSales">${iconHandshake()} Alpaca sales</label>
+                <label for="alpacaSales">${iconHandshake()}Alpaca sales</label>
               </span>
 
               <span class="toggle">
@@ -319,18 +326,18 @@ export default class AlpacaMap extends LitElement {
                   name="alpacaWalking"
                 />
                 <label for="alpacaWalking"
-                  >${iconPersonHiking()} Alpaca walking</label
+                  >${iconPersonHiking()}Alpaca walking</label
                 >
               </span>
 
               <span class="toggle">
                 <input type="checkbox" id="bookable" name="bookable" />
-                <label for="bookable">${iconCalendarCheck()} Bookable</label>
+                <label for="bookable">${iconCalendarCheck()}Bookable</label>
               </span>
 
               <span class="toggle">
                 <input type="checkbox" id="shop" name="shop" />
-                <label for="shop">${iconStore()} Shop</label>
+                <label for="shop">${iconStore()}Shop</label>
               </span>
 
               <span class="toggle">
@@ -339,12 +346,12 @@ export default class AlpacaMap extends LitElement {
                   id="overnightStay"
                   name="overnightStay"
                 />
-                <label for="overnightStay">${iconBed()} Overnight stay</label>
+                <label for="overnightStay">${iconBed()}Overnight stay</label>
               </span>
 
               <span class="toggle">
                 <input type="checkbox" id="studServices" name="studServices" />
-                <label for="studServices">${iconMars()} Stud services</label>
+                <label for="studServices">${iconMars()}Stud services</label>
               </span>
             </div>
           </form>
