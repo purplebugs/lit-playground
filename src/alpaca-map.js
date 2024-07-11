@@ -42,7 +42,7 @@ export default class AlpacaMap extends LitElement {
       }
 
       .header-container {
-        background-color: lightcoral;
+        background-color: white;
         padding: 0.5em;
       }
 
@@ -60,24 +60,71 @@ export default class AlpacaMap extends LitElement {
 
       /* Toggles */
 
+      form {
+        margin: 0;
+        padding: 0;
+      }
+
       .toggle-group {
         /* Scroll across for more toggles*/
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         overflow: auto;
+
+        width: 100%;
+        box-sizing: border-box;
       }
 
       .toggle {
-        background-color: orange;
-        border: solid #5b6dcd 10px;
-        padding: 5px;
+        color: #006ce4;
+        background-color: rgba(0, 108, 228, 0.06);
+        border: solid #006ce4 0.15em;
+        box-shadow: 0 2px 8px 0 rgba(26, 26, 26, 0.16);
+
+        border-radius: 10em;
+        padding: 0.5em;
+        margin: 0.25em;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        label {
+          white-space: nowrap;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .icon {
+          padding: 0 0.1em 0 0.1em;
+        }
+
+        svg {
+          font-size: 1.5em;
+
+          path {
+            fill: currentcolor;
+          }
+        }
+
+        input[type="checkbox"] {
+          margin: 0em 0.4em 0em 0.1em;
+          width: 1.5em;
+          height: 1.5em;
+        }
+
+        input:checked {
+          outline: 0.1em solid white;
+          accent-color: red;
+        }
       }
 
       #map {
         height: 100%;
         width: auto;
-        background-color: darkkhaki;
+        background-color: #a7cdf2;
       }
     `,
   ];
@@ -252,13 +299,11 @@ export default class AlpacaMap extends LitElement {
     return html`
       <section class="web-component-container">
         <header class="header-container">
-          <p>Header container for holding the search toggles</p>
-
           <form id="form" @change="${this._filterMarkers}">
             <div class="toggle-group">
               <span class="toggle">
                 <input type="checkbox" id="public" name="public" checked />
-                <label for="public"> ${iconHouseFlag()} Public farms</label>
+                <label for="public"> ${iconHouseFlag()}Public farms</label>
               </span>
 
               <span class="toggle">
@@ -303,7 +348,7 @@ export default class AlpacaMap extends LitElement {
 
               <span class="toggle">
                 <input type="checkbox" id="studServices" name="studServices" />
-                <label for="studServices">${iconMars()} Stud services</label>
+                <label for="studServices">${iconMars()}Stud services</label>
               </span>
             </div>
           </form>
