@@ -25,7 +25,7 @@ export default class AlpacaMap extends LitElement {
     stylesGoogle,
     iconStyles,
     css`
-      /* Overall layout */
+      /********* Overall layout *********/
 
       :host {
         /* Ref: https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design#responsive_typography */
@@ -35,6 +35,29 @@ export default class AlpacaMap extends LitElement {
         /*         
         font-size: max(5vw, 10px); 
         */
+
+        /* alpaca.life logo colours */
+        --hex-dark-blue: #285dab;
+        --rgb-dark-blue: 40 93 171;
+        --dark-blue: rgb(var(--rgb-dark-blue));
+
+        --hex-pale-blue: #3d78ce;
+        --rgb-pale-blue: 61, 120, 206;
+        --pale-blue: rgb(var(--rgb-pale-blue));
+
+        --hex-yellow: #edbb34;
+        --rgb-yellow: 237 187 52;
+        --yellow: rgb(var(--rgb-yellow));
+
+        --hex-pink: #ed87a1;
+        --rgb-pink: 237 135 161;
+        --pink: rgb(var(--rgb-pink));
+
+        /* From me */
+        --almost-black: #333333;
+        --grey: #666666;
+
+        color: var(--almost-black);
       }
 
       .web-component-container {
@@ -51,14 +74,44 @@ export default class AlpacaMap extends LitElement {
       }
 
       .footer-container {
-        background-color: purple;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.5em 0.5em 0.5em 0.5em;
+
+        background-color: white;
 
         p {
           margin: 0px;
         }
+
+        .footer-message {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
+          text-align: center;
+        }
+
+        #ko-fi {
+          border: solid var(--pink) 0.15em;
+          border-radius: 10em;
+        }
       }
 
-      /* Toggles */
+      /********* Links *********/
+
+      a {
+        color: var(--dark-blue);
+      }
+
+      a:hover {
+        color: var(--pale-blue);
+        text-decoration: underline;
+        text-decoration-thickness: 0.5em;
+      }
+
+      /********* Toggles *********/
 
       form {
         margin: 0;
@@ -121,10 +174,12 @@ export default class AlpacaMap extends LitElement {
         }
       }
 
+      /********* Map *********/
+
       #map {
         height: 100%;
         width: auto;
-        background-color: #a7cdf2;
+        background-color: var(--pale-blue);
       }
     `,
   ];
@@ -357,8 +412,31 @@ export default class AlpacaMap extends LitElement {
           <div id="map"></div>
         </div>
         <footer class="footer-container">
-          <p>This is the footer for the web component</p>
-          <p>Will have logo and links</p>
+          <div>
+            <a href="https://www.alpaca.life" target="_blank"
+              ><img
+                src="/assets/images/alpaca.life.logo.png"
+                width="100px"
+                height="100px"
+                alt="Alpaca Life logo"
+            /></a>
+          </div>
+          <div class="footer-message">
+            Find alpacas,<br />
+            farms and more:<br />
+            <a href="https://www.alpaca.life" target="_blank"
+              >www.alpaca.life</a
+            >
+          </div>
+          <div>
+            <a href="https://ko-fi.com/anitalipsky" target="_blank"
+              ><img
+                id="ko-fi"
+                src="/assets/images/kofi_bg_tag_white.svg"
+                width="100px"
+                alt="Buy me a ko-fi"
+            /></a>
+          </div>
         </footer>
       </section>
     `;
