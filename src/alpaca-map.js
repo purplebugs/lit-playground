@@ -276,26 +276,43 @@ export default class AlpacaMap extends LitElement {
       mapId: "ALPACA_MAP_ID",
     });
 
-    const infoWindow = new InfoWindow({
-      content: "",
-      disableAutoPan: true,
-    });
+    // const infoWindow = new InfoWindow({
+    //   content: "",
+    //   disableAutoPan: true,
+    // });
 
     // Add markers to the map
 
+    function buildContent(farm) {
+      const content = document.createElement("div");
+      content.classList.add("farm");
+
+      const icon = farm?.category?.private ? "Private" : "Public";
+      content.innerHTML = `
+        <div>${icon} - ${farm?.count?.alpacas?.status?.active} - 🦙</div>
+        `;
+      return content;
+    }
+
     const markers = this.farms.map((farm) => {
       const marker = new AdvancedMarkerElement({
+        content: buildContent(farm),
         position: farm.location.lat_lng,
+        title: farm?.name,
       });
 
       // markers can only be keyboard focusable when they have click listeners
-      // open info window when marker is clicked
+      /*       // open info window when marker is clicked
       marker.addListener("click", () => {
         infoWindow.setContent(
-          farm.location.lat_lng.lat + ", " + farm.location.lat_lng.lng
+          farm.location.lat_lng.lat +
+            ", " +
+            farm.location.lat_lng.lng +
+            " Count: " +
+            farm?.count?.alpacas?.status?.active
         );
         infoWindow.open(this.map, marker);
-      });
+      }); */
 
       farm._marker = marker;
 
