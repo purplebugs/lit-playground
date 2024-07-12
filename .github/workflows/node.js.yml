@@ -11,6 +11,8 @@ on:
 
 jobs:
   build:
+    name: Build and Test 🛠️ 🧪
+
     runs-on: ubuntu-latest
 
     # Ref: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs#example-using-npm
