@@ -8,15 +8,31 @@ test("has title", async ({ page }) => {
   await expect(page).toHaveTitle(/Alpaca Map Web Component inside this page/);
 });
 
-test("checkboxes - check and uncheck - defaults", async ({ page }) => {
+test("checkboxes - defaults", async ({ page }) => {
   await page.goto("/");
 
-  await page.getByLabel("Public farms").uncheck();
-  await page.getByLabel("Private farms").uncheck();
-  await page.getByLabel("Alpaca sales").check();
-  await page.getByLabel("Alpaca walking").check();
-  await page.getByLabel("Bookable").check();
-  await page.getByLabel("Shop").check();
-  await page.getByLabel("Overnight stay").check();
-  await page.getByLabel("Stud services").check();
+  await expect(page.getByLabel("Public farms")).toBeChecked({ checked: true });
+  await expect(page.getByLabel("Private farms")).toBeChecked({ checked: true });
+  await expect(page.getByLabel("Alpaca sales")).toBeChecked({ checked: false });
+  await expect(page.getByLabel("Alpaca walking")).toBeChecked({
+    checked: false,
+  });
+  await expect(page.getByLabel("Bookable")).toBeChecked({
+    checked: false,
+  });
+  await expect(page.getByLabel("Shop")).toBeChecked({
+    checked: false,
+  });
+  await expect(page.getByLabel("Overnight stay")).toBeChecked({
+    checked: false,
+  });
+  await expect(page.getByLabel("Stud services")).toBeChecked({
+    checked: false,
+  });
+});
+
+test("has header", async ({ page }) => {
+  await page.goto("/");
+
+  await page.locator("header").isVisible();
 });
