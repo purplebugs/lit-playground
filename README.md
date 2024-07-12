@@ -61,7 +61,31 @@ Format the code
 
 ### Test app
 
-`npm run test`
+Unit tests
+
+```bash
+npm run test
+```
+
+UI tests
+
+- Precondition: Install browsers for UI tests
+
+```bash
+npx playwright install --with-deps
+```
+
+Run tests headless mode
+
+```bash
+npm run test-ui
+```
+
+Interactive mode
+
+```bash
+npm run test-ui -- --ui
+```
 
 ### Run app 🚀
 
