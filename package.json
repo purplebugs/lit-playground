@@ -8,17 +8,20 @@
     "build": "node build.js",
     "prettier": "prettier . --write",
     "start": "node dev-server.js",
-    "test": "node --test"
+    "test": "node --test",
+    "test-ui": "playwright test"
   },
   "author": "",
   "license": "MIT",
   "description": "",
   "devDependencies": {
     "@fastify/static": "7.0.4",
+    "@playwright/test": "^1.45.1",
     "@rollup/plugin-commonjs": "26.0.1",
     "@rollup/plugin-node-resolve": "15.2.3",
     "@rollup/plugin-replace": "5.0.7",
     "@rollup/plugin-terser": "0.4.4",
+    "@types/node": "^20.14.10",
     "fastify": "4.28.0",
     "prettier": "3.3.2",
     "rollup": "4.18.0"
