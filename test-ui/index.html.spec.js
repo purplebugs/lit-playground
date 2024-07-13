@@ -79,11 +79,23 @@ test.describe("Web component within page", () => {
     const logo = page.getByAltText("Alpaca Life logo");
     await expect(logo).toBeVisible();
 
+    const linkLogo = page.getByTestId("link-logo");
+    await expect(linkLogo).toHaveAttribute("href", "https://www.alpaca.life");
+
     const linkWebPage = page.getByRole("link", { name: "www.alpaca.life" });
     await expect(linkWebPage).toHaveAttribute(
       "href",
       "https://www.alpaca.life"
     );
     await expect(linkWebPage).toBeVisible();
+
+    const logoSupport = page.getByAltText("Buy me a ko-fi");
+    await expect(logoSupport).toBeVisible();
+
+    const linkLogoSupport = page.getByTestId("link-support");
+    await expect(linkLogoSupport).toHaveAttribute(
+      "href",
+      "https://ko-fi.com/anitalipsky"
+    );
   });
 });
