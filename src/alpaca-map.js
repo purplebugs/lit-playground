@@ -430,7 +430,10 @@ export default class AlpacaMap extends LitElement {
         </div>
         <footer class="footer-container">
           <div>
-            <a href="https://www.alpaca.life" target="_blank"
+            <a
+              href="https://www.alpaca.life"
+              target="_blank"
+              data-testid="link-logo"
               ><img
                 src="/assets/images/alpaca.life.logo.png"
                 width="100px"
@@ -446,7 +449,10 @@ export default class AlpacaMap extends LitElement {
             >
           </div>
           <div>
-            <a href="https://ko-fi.com/anitalipsky" target="_blank"
+            <a
+              href="https://ko-fi.com/anitalipsky"
+              target="_blank"
+              data-testid="link-support"
               ><img
                 id="ko-fi"
                 src="/assets/images/kofi_bg_tag_white.svg"
