@@ -3,14 +3,18 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Content around the web component", () => {
   test("title", async ({ page }) => {
+    // ARRANGE
     await page.goto("/");
 
-    // Expect a title "to contain" a substring.
+    // ASSERT
     await expect(page).toHaveTitle(/Alpaca Map Web Component inside this page/);
   });
 
   test("page containing web component", async ({ page }) => {
+    // ARRANGE
     await page.goto("/");
+
+    // ASSERT
     await page
       .getByText(
         "This is the external website which has content ABOVE the web component."
@@ -27,8 +31,10 @@ test.describe("Content around the web component", () => {
 
 test.describe("Web component within page", () => {
   test("checkboxes - defaults", async ({ page }) => {
+    // ARRANGE
     await page.goto("/");
 
+    // ASSERT
     await expect(page.getByLabel("Public farms")).toBeChecked({
       checked: true,
     });
@@ -56,14 +62,28 @@ test.describe("Web component within page", () => {
   });
 
   test("header element", async ({ page }) => {
+    // ARRANGE
     await page.goto("/");
 
+    // ASSERT
     await page.locator("header").isVisible();
   });
 
   test("footer element", async ({ page }) => {
+    // ARRANGE
     await page.goto("/");
 
+    // ASSERT
     await page.locator("footer").isVisible();
+
+    const logo = page.getByAltText("Alpaca Life logo");
+    await expect(logo).toBeVisible();
+
+    const linkWebPage = page.getByRole("link", { name: "www.alpaca.life" });
+    await expect(linkWebPage).toHaveAttribute(
+      "href",
+      "https://www.alpaca.life"
+    );
+    await expect(linkWebPage).toBeVisible();
   });
 });
