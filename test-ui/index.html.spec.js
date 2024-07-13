@@ -20,12 +20,6 @@ test.describe("Content around the web component", () => {
         "This is the external website which has content ABOVE the web component."
       )
       .isVisible();
-
-    await page
-      .getByText(
-        "This is the external website which has content BELOW the web component."
-      )
-      .isVisible();
   });
 });
 
@@ -97,5 +91,11 @@ test.describe("Web component within page", () => {
       "href",
       "https://ko-fi.com/anitalipsky"
     );
+
+    await page
+      .getByText(
+        "This is the external website which has content BELOW the web component."
+      )
+      .isVisible();
   });
 });
