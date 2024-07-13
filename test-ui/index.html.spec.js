@@ -1,18 +1,17 @@
 import { test, expect } from "@playwright/test";
 
+test.beforeEach(async ({ page }) => {
+  // ARRANGE
+  await page.goto("/");
+});
+
 test.describe("Content around the web component", () => {
   test("title", async ({ page }) => {
-    // ARRANGE
-    await page.goto("/");
-
     // ASSERT
     await expect(page).toHaveTitle(/Alpaca Map Web Component inside this page/);
   });
 
   test("page containing web component", async ({ page }) => {
-    // ARRANGE
-    await page.goto("/");
-
     // ASSERT
     await page
       .getByText(
@@ -24,9 +23,6 @@ test.describe("Content around the web component", () => {
 
 test.describe("Web component within page", () => {
   test("checkboxes - defaults", async ({ page }) => {
-    // ARRANGE
-    await page.goto("/");
-
     // ASSERT
     await expect(page.getByLabel("Public farms")).toBeChecked({
       checked: true,
@@ -55,17 +51,11 @@ test.describe("Web component within page", () => {
   });
 
   test("header element", async ({ page }) => {
-    // ARRANGE
-    await page.goto("/");
-
     // ASSERT
     await page.locator("header").isVisible();
   });
 
   test("footer element", async ({ page }) => {
-    // ARRANGE
-    await page.goto("/");
-
     // ASSERT
     await page.locator("footer").isVisible();
 
