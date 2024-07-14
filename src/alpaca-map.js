@@ -57,7 +57,14 @@ export default class AlpacaMap extends LitElement {
         --almost-black: #333333;
         --grey: #666666;
 
-        color: var(--almost-black);
+        --hex-brown: #83580b;
+        --rgb-brown: 133, 90, 10;
+        --brown: rgb(var(--rgb-brown));
+
+        /* Pantone 377 C - from my chair */
+        --hex-green: #7a9a01;
+        --rgb-green: 119, 152, 1;
+        --green: rgb(var(--rgb-green));
       }
 
       .web-component-container {
@@ -181,6 +188,45 @@ export default class AlpacaMap extends LitElement {
         width: auto;
         background-color: var(--pale-blue);
       }
+
+      .farm {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background-color: white;
+        border: 0.2em solid var(--green); /* TODO change colour for public/private */
+        border-radius: 1rem;
+        box-shadow: 10px 10px 5px #0003;
+        color: var(--almost-black);
+        padding: 0.75rem;
+
+        width: auto;
+        max-width: 15rem;
+
+        .summary {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          font-size: 1.5rem;
+          gap: 0.5rem;
+        }
+
+        ::after {
+          border-left: 9px solid transparent;
+          border-right: 9px solid transparent;
+          border-top: 9px solid var(--green); /* TODO change colour for public/private */
+          content: "";
+          height: 0;
+          left: 50%;
+          position: absolute;
+          top: 100%;
+          transform: translate(-50%);
+          width: 0;
+          z-index: 1;
+        }
+      }
     `,
   ];
 
@@ -287,10 +333,15 @@ export default class AlpacaMap extends LitElement {
       const content = document.createElement("div");
       content.classList.add("farm");
 
-      const icon = farm?.category?.private ? "Private" : "Public";
+      // const icon = farm?.category?.private ? "Private" : "Public";
+
       content.innerHTML = `
-        <div>${icon} - ${farm?.count?.alpacas?.status?.active} - 🦙</div>
-        `;
+    <div class="summary">
+     <div class="icon">${iconHouseFlag().svgString}</div>
+     <div class="count">${farm?.count?.alpacas?.status?.active} 🦙</div>
+    </div>
+    `;
+
       return content;
     }
 
@@ -375,17 +426,23 @@ export default class AlpacaMap extends LitElement {
             <div class="toggle-group">
               <span class="toggle">
                 <input type="checkbox" id="public" name="public" checked />
-                <label for="public"> ${iconHouseFlag()}Public farms</label>
+                <label for="public">
+                  ${iconHouseFlag().htmlObject}Public farms</label
+                >
               </span>
 
               <span class="toggle">
                 <input type="checkbox" id="private" name="private" checked />
-                <label for="private">${iconKey()}Private farms</label>
+                <label for="private"
+                  >${iconKey().htmlObject}Private farms</label
+                >
               </span>
 
               <span class="toggle">
                 <input type="checkbox" id="alpacaSales" name="alpacaSales" />
-                <label for="alpacaSales">${iconHandshake()}Alpaca sales</label>
+                <label for="alpacaSales"
+                  >${iconHandshake().htmlObject}Alpaca sales</label
+                >
               </span>
 
               <span class="toggle">
@@ -395,18 +452,20 @@ export default class AlpacaMap extends LitElement {
                   name="alpacaWalking"
                 />
                 <label for="alpacaWalking"
-                  >${iconPersonHiking()}Alpaca walking</label
+                  >${iconPersonHiking().htmlObject}Alpaca walking</label
                 >
               </span>
 
               <span class="toggle">
                 <input type="checkbox" id="bookable" name="bookable" />
-                <label for="bookable">${iconCalendarCheck()}Bookable</label>
+                <label for="bookable"
+                  >${iconCalendarCheck().htmlObject}Bookable</label
+                >
               </span>
 
               <span class="toggle">
                 <input type="checkbox" id="shop" name="shop" />
-                <label for="shop">${iconStore()}Shop</label>
+                <label for="shop">${iconStore().htmlObject}Shop</label>
               </span>
 
               <span class="toggle">
@@ -415,12 +474,16 @@ export default class AlpacaMap extends LitElement {
                   id="overnightStay"
                   name="overnightStay"
                 />
-                <label for="overnightStay">${iconBed()}Overnight stay</label>
+                <label for="overnightStay"
+                  >${iconBed().htmlObject}Overnight stay</label
+                >
               </span>
 
               <span class="toggle">
                 <input type="checkbox" id="studServices" name="studServices" />
-                <label for="studServices">${iconMars()}Stud services</label>
+                <label for="studServices"
+                  >${iconMars().htmlObject}Stud services</label
+                >
               </span>
             </div>
           </form>
