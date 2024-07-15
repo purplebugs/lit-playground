@@ -371,7 +371,20 @@ export default class AlpacaMap extends LitElement {
     });
 
     // Add a marker clusterer to manage the markers.
-    this.cluster = new MarkerClusterer({ map: this.map });
+    this.cluster = new MarkerClusterer({
+      map: this.map,
+      algorithmOptions: {
+        radius: 100,
+        /*
+        Ref: https://www.npmjs.com/package/supercluster
+        minPoints: 10,
+        minZoom: 4,
+        maxZoom: 16,
+        radius: 100,
+        maxZoom: 16,
+        */
+      },
+    });
     this.cluster.addMarkers(markers);
   }
 
