@@ -294,17 +294,6 @@ export default class AlpacaMap extends LitElement {
     this.map.mapTypes.set("styled_map", styledMapType);
     this.map.setMapTypeId("styled_map");
 
-    // Add markers to the map
-    // function toggleHighlight(markerView, farm) {
-    //   if (markerView.content.classList.contains("highlight")) {
-    //     markerView.content.classList.remove("highlight");
-    //     markerView.zIndex = null;
-    //   } else {
-    //     markerView.content.classList.add("highlight");
-    //     markerView.zIndex = 1;
-    //   }
-    // }
-
     const markers = this.farms.map((farm) => {
       const content = document.createElement("div");
       content.innerHTML = `
