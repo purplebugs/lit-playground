@@ -386,7 +386,6 @@ export default class AlpacaMap extends LitElement {
     this.map.setMapTypeId("styled_map");
 
     // Add markers to the map
-    
     function toggleHighlight(markerView, farm) {
       if (markerView.content.classList.contains("highlight")) {
         markerView.content.classList.remove("highlight");
@@ -408,7 +407,14 @@ export default class AlpacaMap extends LitElement {
      <div class="count">${farm?.count?.alpacas?.status?.active} 🦙</div>
     </div>
 
-    <div class="details">TO DO : Fill out details - Onclick show  Farm details  Onclick show  Farm details Onclick show  Farm details</div>
+    <div class="details">
+    <h4>${farm?.name}</h4>
+    ${farm?.city}
+    <address>${farm?.location?.google?.formatted_address}</address>
+    <address>
+    <a href="${farm?.location?.google?.directions_url_href}"  target="_blank" rel="noreferrer" title="Google directions">Directions</a>
+    </address>
+    </div>
     `;
 
       return content;
