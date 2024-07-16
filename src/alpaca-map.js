@@ -1,6 +1,7 @@
 import { compareExact, compareSparse } from "./utils";
 import { LitElement, html, css } from "lit";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
+import STYLED_MAP_TYPE from "./styles-map";
 import stylesGoogle from "./styles-google";
 import {
   iconStyles,
@@ -371,13 +372,21 @@ export default class AlpacaMap extends LitElement {
       mapId: "ALPACA_MAP_ID",
     });
 
-    // const infoWindow = new InfoWindow({
-    //   content: "",
-    //   disableAutoPan: true,
-    // });
+    // Ref: Google map style
+    // https://developers.google.com/maps/documentation/javascript/examples/maptype-styled-simple
+    // Create a new StyledMapType object, passing it an array of styles,
+    // and the name to be displayed on the map type control.
+    const styledMapType = new window.google.maps.StyledMapType(
+      STYLED_MAP_TYPE,
+      { name: "Alpaca Styled Map" }
+    );
+
+    // Associate the styled map with the MapTypeId and set it to display.
+    this.map.mapTypes.set("styled_map", styledMapType);
+    this.map.setMapTypeId("styled_map");
 
     // Add markers to the map
-
+    
     function toggleHighlight(markerView, farm) {
       if (markerView.content.classList.contains("highlight")) {
         markerView.content.classList.remove("highlight");
