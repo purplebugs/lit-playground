@@ -432,7 +432,6 @@ export default class AlpacaMap extends LitElement {
       // toggle marker summary/details when marker is clicked
       marker.addListener("click", () => {
         toggleHighlight(marker, farm);
-        console.log(marker.content);
       });
 
       farm._marker = marker;
