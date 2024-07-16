@@ -295,16 +295,23 @@ export default class AlpacaMap extends LitElement {
     this.map.setMapTypeId("styled_map");
 
     const markers = this.farms.map((farm) => {
-      const content = document.createElement("div");
-      content.innerHTML = `
-        <alpaca-map-marker name=${farm?.name} 
-                          category=${farm?.category?.private ? "private" : "public"}
-                          count=${farm?.count?.alpacas?.status?.active}
-                          city=${farm?.city}
-                          address=${farm?.location?.google?.formatted_address}
-                          directions=${farm?.location?.google?.directions_url_href}
-                          highlight="false">
-        </alpaca-map-marker>`;
+      const content = document.createElement("alpaca-map-marker");
+      content.setAttribute("name", farm?.name);
+      content.setAttribute(
+        "category",
+        farm?.category?.private ? "private" : "public"
+      );
+      content.setAttribute("count", farm?.count?.alpacas?.status?.active);
+      content.setAttribute("city", farm?.city);
+      content.setAttribute(
+        "address",
+        farm?.location?.google?.formatted_address
+      );
+      content.setAttribute(
+        "directions",
+        farm?.location?.google?.directions_url_href
+      );
+      content.setAttribute("highlight", "false");
 
       const marker = new AdvancedMarkerElement({
         content,
@@ -316,12 +323,11 @@ export default class AlpacaMap extends LitElement {
 
       // toggle marker summary/details when marker is clicked
       marker.addListener("click", () => {
-        const el = content.querySelector("alpaca-map-marker");
-        const highlighted = el.getAttribute("highlight");
+        const highlighted = marker.content.getAttribute("highlight");
         if (highlighted === "true") {
-          el.setAttribute("highlight", "false");
+          marker.content.setAttribute("highlight", "false");
         } else {
-          el.setAttribute("highlight", "true");
+          marker.content.setAttribute("highlight", "true");
         }
       });
 
