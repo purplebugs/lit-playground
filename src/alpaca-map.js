@@ -291,7 +291,7 @@ export default class AlpacaMap extends LitElement {
     this.map.mapTypes.set("styled_map", styledMapType);
     this.map.setMapTypeId("styled_map");
 
-    const infoWindow = new InfoWindow({
+    const infoWindow = new google.maps.InfoWindow({
       content: "",
       disableAutoPan: true,
     });
