@@ -3,7 +3,6 @@ import { LitElement, html, css } from "lit";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 import STYLED_MAP_TYPE from "./styles-map";
 import stylesGoogle from "./styles-google";
-
 import {
   iconStyles,
   iconBed,
