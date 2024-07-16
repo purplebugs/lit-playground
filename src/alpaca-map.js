@@ -57,8 +57,11 @@ export default class AlpacaMap extends LitElement {
         /* From me */
         --almost-black: #333333;
         --grey: #666666;
+        --brown: #83580b;
+        --green: #7a9a01; /* Pantone 377 C - from my chair */
 
-        color: var(--almost-black);
+        --private-farm: var(--brown);
+        --public-farm: var(--green);
       }
 
       .web-component-container {
@@ -182,6 +185,98 @@ export default class AlpacaMap extends LitElement {
         width: auto;
         background-color: var(--pale-blue);
       }
+
+      /********* Farm styles in unhighlighted state *********/
+      /* Ref: https://developers.google.com/maps/documentation/javascript/advanced-markers/html-markers#maps_advanced_markers_html-css */
+
+      .farm {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background-color: white;
+        border-radius: 1rem;
+        box-shadow: 10px 10px 5px #0003;
+        color: var(--almost-black);
+
+        /* Override google map font to avoid flicker when load */
+        font:
+          400 1.5em Poppins,
+          Arial,
+          sans-serif;
+        padding: 0.75rem;
+
+        width: auto;
+        max-width: 15rem;
+      }
+
+      .farm::after {
+        border-left: 9px solid transparent;
+        border-right: 9px solid transparent;
+        content: "";
+        height: 0;
+        left: 50%;
+        position: absolute;
+        top: 100%;
+        transform: translate(-50%);
+        width: 0;
+        z-index: 1;
+      }
+
+      .farm .summary {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 1.5rem;
+        gap: 0.5rem;
+      }
+
+      .farm .details {
+        display: none;
+        flex-direction: column;
+        flex: 1;
+      }
+
+      /********* Farm styles in highlighted state *********/
+
+      /*       .farm.highlight {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
+        height: 80px;
+        padding: 8px 15px;
+        width: auto;
+      } */
+
+      .farm.highlight .details {
+        display: flex;
+      }
+
+      /********* Farm category colours *********/
+      .farm.private {
+        border: 0.2em solid var(--private-farm);
+      }
+
+      .farm.public {
+        border: 0.2em solid var(--public-farm);
+      }
+
+      .farm.private::after {
+        border-top: 9px solid var(--private-farm);
+      }
+
+      .farm.public::after {
+        border-top: 9px solid var(--public-farm);
+      }
+
+      .farm.private .icon svg {
+        fill: var(--private-farm);
+      }
+
+      .farm.public .icon svg {
+        fill: var(--public-farm);
+      }
     `,
   ];
 
@@ -290,25 +385,53 @@ export default class AlpacaMap extends LitElement {
     this.map.mapTypes.set("styled_map", styledMapType);
     this.map.setMapTypeId("styled_map");
 
-    const infoWindow = new google.maps.InfoWindow({
-      content: "",
-      disableAutoPan: true,
-    });
-
     // Add markers to the map
+    function toggleHighlight(markerView, farm) {
+      if (markerView.content.classList.contains("highlight")) {
+        markerView.content.classList.remove("highlight");
+        markerView.zIndex = null;
+      } else {
+        markerView.content.classList.add("highlight");
+        markerView.zIndex = 1;
+      }
+    }
+
+    function buildContent(farm) {
+      const content = document.createElement("div");
+      content.classList.add("farm");
+      content.classList.add(farm?.category?.private ? "private" : "public");
+
+      content.innerHTML = `
+    <div class="summary">
+     <div class="icon">${iconHouseFlag().svgString}</div>
+     <div class="count">${farm?.count?.alpacas?.status?.active} 🦙</div>
+    </div>
+
+    <div class="details">
+    <h4>${farm?.name}</h4>
+    ${farm?.city}
+    <address>${farm?.location?.google?.formatted_address}</address>
+    <address>
+    <a href="${farm?.location?.google?.directions_url_href}"  target="_blank" rel="noreferrer" title="Google directions">Directions</a>
+    </address>
+    </div>
+    `;
+
+      return content;
+    }
 
     const markers = this.farms.map((farm) => {
-      const marker = new google.maps.marker.AdvancedMarkerElement({
+      const marker = new AdvancedMarkerElement({
+        content: buildContent(farm),
         position: farm.location.lat_lng,
+        title: farm?.name,
       });
 
       // markers can only be keyboard focusable when they have click listeners
-      // open info window when marker is clicked
+
+      // toggle marker summary/details when marker is clicked
       marker.addListener("click", () => {
-        infoWindow.setContent(
-          farm.location.lat_lng.lat + ", " + farm.location.lat_lng.lng
-        );
-        infoWindow.open(this.map, marker);
+        toggleHighlight(marker, farm);
       });
 
       farm._marker = marker;
@@ -317,7 +440,20 @@ export default class AlpacaMap extends LitElement {
     });
 
     // Add a marker clusterer to manage the markers.
-    this.cluster = new MarkerClusterer({ map: this.map });
+    this.cluster = new MarkerClusterer({
+      map: this.map,
+      algorithmOptions: {
+        radius: 100,
+        /*
+        Ref: https://www.npmjs.com/package/supercluster
+        minPoints: 10,
+        minZoom: 4,
+        maxZoom: 16,
+        radius: 100,
+        maxZoom: 16,
+        */
+      },
+    });
     this.cluster.addMarkers(markers);
   }
 
@@ -372,17 +508,23 @@ export default class AlpacaMap extends LitElement {
             <div class="toggle-group">
               <span class="toggle">
                 <input type="checkbox" id="public" name="public" checked />
-                <label for="public"> ${iconHouseFlag()}Public farms</label>
+                <label for="public">
+                  ${iconHouseFlag().htmlObject}Public farms</label
+                >
               </span>
 
               <span class="toggle">
                 <input type="checkbox" id="private" name="private" checked />
-                <label for="private">${iconKey()}Private farms</label>
+                <label for="private"
+                  >${iconKey().htmlObject}Private farms</label
+                >
               </span>
 
               <span class="toggle">
                 <input type="checkbox" id="alpacaSales" name="alpacaSales" />
-                <label for="alpacaSales">${iconHandshake()}Alpaca sales</label>
+                <label for="alpacaSales"
+                  >${iconHandshake().htmlObject}Alpaca sales</label
+                >
               </span>
 
               <span class="toggle">
@@ -392,18 +534,20 @@ export default class AlpacaMap extends LitElement {
                   name="alpacaWalking"
                 />
                 <label for="alpacaWalking"
-                  >${iconPersonHiking()}Alpaca walking</label
+                  >${iconPersonHiking().htmlObject}Alpaca walking</label
                 >
               </span>
 
               <span class="toggle">
                 <input type="checkbox" id="bookable" name="bookable" />
-                <label for="bookable">${iconCalendarCheck()}Bookable</label>
+                <label for="bookable"
+                  >${iconCalendarCheck().htmlObject}Bookable</label
+                >
               </span>
 
               <span class="toggle">
                 <input type="checkbox" id="shop" name="shop" />
-                <label for="shop">${iconStore()}Shop</label>
+                <label for="shop">${iconStore().htmlObject}Shop</label>
               </span>
 
               <span class="toggle">
@@ -412,12 +556,16 @@ export default class AlpacaMap extends LitElement {
                   id="overnightStay"
                   name="overnightStay"
                 />
-                <label for="overnightStay">${iconBed()}Overnight stay</label>
+                <label for="overnightStay"
+                  >${iconBed().htmlObject}Overnight stay</label
+                >
               </span>
 
               <span class="toggle">
                 <input type="checkbox" id="studServices" name="studServices" />
-                <label for="studServices">${iconMars()}Stud services</label>
+                <label for="studServices"
+                  >${iconMars().htmlObject}Stud services</label
+                >
               </span>
             </div>
           </form>
