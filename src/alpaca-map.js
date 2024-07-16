@@ -58,15 +58,11 @@ export default class AlpacaMap extends LitElement {
         /* From me */
         --almost-black: #333333;
         --grey: #666666;
+        --brown: #83580b;
+        --green: #7a9a01; /* Pantone 377 C - from my chair */
 
-        --hex-brown: #83580b;
-        --rgb-brown: 133, 90, 10;
-        --brown: rgb(var(--rgb-brown));
-
-        /* Pantone 377 C - from my chair */
-        --hex-green: #7a9a01;
-        --rgb-green: 119, 152, 1;
-        --green: rgb(var(--rgb-green));
+        --private-farm: var(--brown);
+        --public-farm: var(--green);
       }
 
       .web-component-container {
@@ -191,13 +187,15 @@ export default class AlpacaMap extends LitElement {
         background-color: var(--pale-blue);
       }
 
+      /********* Farm styles in unhighlighted state *********/
+      /* Ref: https://developers.google.com/maps/documentation/javascript/advanced-markers/html-markers#maps_advanced_markers_html-css */
+
       .farm {
         display: flex;
         align-items: center;
         justify-content: center;
 
         background-color: white;
-        border: 0.2em solid var(--green); /* TODO change colour for public/private */
         border-radius: 1rem;
         box-shadow: 10px 10px 5px #0003;
         color: var(--almost-black);
@@ -211,29 +209,74 @@ export default class AlpacaMap extends LitElement {
 
         width: auto;
         max-width: 15rem;
+      }
 
-        .summary {
-          display: flex;
-          align-items: center;
-          justify-content: center;
+      .farm::after {
+        border-left: 9px solid transparent;
+        border-right: 9px solid transparent;
+        content: "";
+        height: 0;
+        left: 50%;
+        position: absolute;
+        top: 100%;
+        transform: translate(-50%);
+        width: 0;
+        z-index: 1;
+      }
 
-          font-size: 1.5rem;
-          gap: 0.5rem;
-        }
+      .farm .summary {
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-        ::after {
-          border-left: 9px solid transparent;
-          border-right: 9px solid transparent;
-          border-top: 9px solid var(--green); /* TODO change colour for public/private */
-          content: "";
-          height: 0;
-          left: 50%;
-          position: absolute;
-          top: 100%;
-          transform: translate(-50%);
-          width: 0;
-          z-index: 1;
-        }
+        font-size: 1.5rem;
+        gap: 0.5rem;
+      }
+
+      .farm .details {
+        display: none;
+        flex-direction: column;
+        flex: 1;
+      }
+
+      /********* Farm styles in highlighted state *********/
+
+      /*       .farm.highlight {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
+        height: 80px;
+        padding: 8px 15px;
+        width: auto;
+      } */
+
+      .farm.highlight .details {
+        display: flex;
+      }
+
+      /********* Farm category colours *********/
+      .farm.private {
+        border: 0.2em solid var(--private-farm);
+      }
+
+      .farm.public {
+        border: 0.2em solid var(--public-farm);
+      }
+
+      .farm.private::after {
+        border-top: 9px solid var(--private-farm);
+      }
+
+      .farm.public::after {
+        border-top: 9px solid var(--public-farm);
+      }
+
+      .farm.private .icon svg {
+        fill: var(--private-farm);
+      }
+
+      .farm.public .icon svg {
+        fill: var(--public-farm);
       }
     `,
   ];
@@ -343,24 +386,30 @@ export default class AlpacaMap extends LitElement {
     this.map.mapTypes.set("styled_map", styledMapType);
     this.map.setMapTypeId("styled_map");
 
-    // const infoWindow = new InfoWindow({
-    //   content: "",
-    //   disableAutoPan: true,
-    // });
-
     // Add markers to the map
+
+    function toggleHighlight(markerView, farm) {
+      if (markerView.content.classList.contains("highlight")) {
+        markerView.content.classList.remove("highlight");
+        markerView.zIndex = null;
+      } else {
+        markerView.content.classList.add("highlight");
+        markerView.zIndex = 1;
+      }
+    }
 
     function buildContent(farm) {
       const content = document.createElement("div");
       content.classList.add("farm");
-
-      // const icon = farm?.category?.private ? "Private" : "Public";
+      content.classList.add(farm?.category?.private ? "private" : "public");
 
       content.innerHTML = `
     <div class="summary">
      <div class="icon">${iconHouseFlag().svgString}</div>
      <div class="count">${farm?.count?.alpacas?.status?.active} 🦙</div>
     </div>
+
+    <div class="details">TO DO : Fill out details - Onclick show  Farm details  Onclick show  Farm details Onclick show  Farm details</div>
     `;
 
       return content;
@@ -374,17 +423,12 @@ export default class AlpacaMap extends LitElement {
       });
 
       // markers can only be keyboard focusable when they have click listeners
-      /*       // open info window when marker is clicked
+
+      // toggle marker summary/details when marker is clicked
       marker.addListener("click", () => {
-        infoWindow.setContent(
-          farm.location.lat_lng.lat +
-            ", " +
-            farm.location.lat_lng.lng +
-            " Count: " +
-            farm?.count?.alpacas?.status?.active
-        );
-        infoWindow.open(this.map, marker);
-      }); */
+        toggleHighlight(marker, farm);
+        console.log(marker.content);
+      });
 
       farm._marker = marker;
 
