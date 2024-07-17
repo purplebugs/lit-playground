@@ -1,4 +1,5 @@
 import { LitElement, html, css } from "lit";
+import { iconStyles, iconHouseFlag, iconKey } from "./svg-icons";
 
 export default class AlpacaMapMarker extends LitElement {
   static properties = {
@@ -21,6 +22,7 @@ export default class AlpacaMapMarker extends LitElement {
   };
 
   static styles = [
+    iconStyles,
     css`
       /********* Farm styles in unhighlighted state *********/
       /* Ref: https://developers.google.com/maps/documentation/javascript/advanced-markers/html-markers#maps_advanced_markers_html-css */
@@ -137,7 +139,11 @@ export default class AlpacaMapMarker extends LitElement {
   render() {
     return html` <div class="farm ${this.category} ${this.highlight}">
       <div class="summary">
-        <div class="icon">TODO Icon ${this.highlight}</div>
+        <div class="icon">
+          ${this.category === "private"
+            ? iconKey().htmlObject
+            : iconHouseFlag().htmlObject}
+        </div>
         <div class="count">${this.count} 🦙</div>
       </div>
 
