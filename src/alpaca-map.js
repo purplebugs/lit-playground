@@ -14,6 +14,7 @@ import {
   iconPersonHiking,
   iconStore,
 } from "./svg-icons";
+import "./alpaca-map-marker";
 
 export default class AlpacaMap extends LitElement {
   static properties = {
@@ -185,98 +186,6 @@ export default class AlpacaMap extends LitElement {
         width: auto;
         background-color: var(--pale-blue);
       }
-
-      /********* Farm styles in unhighlighted state *********/
-      /* Ref: https://developers.google.com/maps/documentation/javascript/advanced-markers/html-markers#maps_advanced_markers_html-css */
-
-      .farm {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        background-color: white;
-        border-radius: 1rem;
-        box-shadow: 10px 10px 5px #0003;
-        color: var(--almost-black);
-
-        /* Override google map font to avoid flicker when load */
-        font:
-          400 1.5em Poppins,
-          Arial,
-          sans-serif;
-        padding: 0.75rem;
-
-        width: auto;
-        max-width: 15rem;
-      }
-
-      .farm::after {
-        border-left: 9px solid transparent;
-        border-right: 9px solid transparent;
-        content: "";
-        height: 0;
-        left: 50%;
-        position: absolute;
-        top: 100%;
-        transform: translate(-50%);
-        width: 0;
-        z-index: 1;
-      }
-
-      .farm .summary {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        font-size: 1.5rem;
-        gap: 0.5rem;
-      }
-
-      .farm .details {
-        display: none;
-        flex-direction: column;
-        flex: 1;
-      }
-
-      /********* Farm styles in highlighted state *********/
-
-      /*       .farm.highlight {
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
-        height: 80px;
-        padding: 8px 15px;
-        width: auto;
-      } */
-
-      .farm.highlight .details {
-        display: flex;
-      }
-
-      /********* Farm category colours *********/
-      .farm.private {
-        border: 0.2em solid var(--private-farm);
-      }
-
-      .farm.public {
-        border: 0.2em solid var(--public-farm);
-      }
-
-      .farm.private::after {
-        border-top: 9px solid var(--private-farm);
-      }
-
-      .farm.public::after {
-        border-top: 9px solid var(--public-farm);
-      }
-
-      .farm.private .icon svg {
-        fill: var(--private-farm);
-      }
-
-      .farm.public .icon svg {
-        fill: var(--public-farm);
-      }
     `,
   ];
 
@@ -385,44 +294,27 @@ export default class AlpacaMap extends LitElement {
     this.map.mapTypes.set("styled_map", styledMapType);
     this.map.setMapTypeId("styled_map");
 
-    // Add markers to the map
-    function toggleHighlight(markerView, farm) {
-      if (markerView.content.classList.contains("highlight")) {
-        markerView.content.classList.remove("highlight");
-        markerView.zIndex = null;
-      } else {
-        markerView.content.classList.add("highlight");
-        markerView.zIndex = 1;
-      }
-    }
-
-    function buildContent(farm) {
-      const content = document.createElement("div");
-      content.classList.add("farm");
-      content.classList.add(farm?.category?.private ? "private" : "public");
-
-      content.innerHTML = `
-    <div class="summary">
-     <div class="icon">${iconHouseFlag().svgString}</div>
-     <div class="count">${farm?.count?.alpacas?.status?.active} 🦙</div>
-    </div>
-
-    <div class="details">
-    <h4>${farm?.name}</h4>
-    ${farm?.city}
-    <address>${farm?.location?.google?.formatted_address}</address>
-    <address>
-    <a href="${farm?.location?.google?.directions_url_href}"  target="_blank" rel="noreferrer" title="Google directions">Directions</a>
-    </address>
-    </div>
-    `;
-
-      return content;
-    }
-
     const markers = this.farms.map((farm) => {
+      const content = document.createElement("alpaca-map-marker");
+      content.setAttribute("name", farm?.name);
+      content.setAttribute(
+        "category",
+        farm?.category?.private ? "private" : "public"
+      );
+      content.setAttribute("count", farm?.count?.alpacas?.status?.active);
+      content.setAttribute("city", farm?.city);
+      content.setAttribute(
+        "address",
+        farm?.location?.google?.formatted_address
+      );
+      content.setAttribute(
+        "directions",
+        farm?.location?.google?.directions_url_href
+      );
+      content.setAttribute("highlight", "false");
+
       const marker = new AdvancedMarkerElement({
-        content: buildContent(farm),
+        content,
         position: farm.location.lat_lng,
         title: farm?.name,
       });
@@ -431,7 +323,12 @@ export default class AlpacaMap extends LitElement {
 
       // toggle marker summary/details when marker is clicked
       marker.addListener("click", () => {
-        toggleHighlight(marker, farm);
+        const highlighted = marker.content.getAttribute("highlight");
+        if (highlighted === "true") {
+          marker.content.setAttribute("highlight", "false");
+        } else {
+          marker.content.setAttribute("highlight", "true");
+        }
       });
 
       farm._marker = marker;
