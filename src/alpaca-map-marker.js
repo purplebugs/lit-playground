@@ -1,5 +1,4 @@
 import { LitElement, html, css } from "lit";
-import { iconStyles, iconHouseFlag, iconKey } from "./svg-icons";
 import "./alpaca-map-icon";
 
 export default class AlpacaMapMarker extends LitElement {
@@ -23,7 +22,6 @@ export default class AlpacaMapMarker extends LitElement {
   };
 
   static styles = [
-    iconStyles,
     css`
       /********* Farm styles in unhighlighted state *********/
       /* Ref: https://developers.google.com/maps/documentation/javascript/advanced-markers/html-markers#maps_advanced_markers_html-css */
