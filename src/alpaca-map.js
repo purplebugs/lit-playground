@@ -1,10 +1,10 @@
-import { compareExact, compareSparse } from "./utils";
+import { compareExact, compareSparse } from "./utils.js";
 import { LitElement, html, css } from "lit";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
-import STYLED_MAP_TYPE from "./styles-map";
-import stylesGoogle from "./styles-google";
-import "./alpaca-map-marker";
-import "./alpaca-map-icon";
+import STYLED_MAP_TYPE from "./styles-map.js";
+import stylesGoogle from "./styles-google.js";
+import "./alpaca-map-marker.js";
+import "./alpaca-map-icon.js";
 
 export default class AlpacaMap extends LitElement {
   static properties = {

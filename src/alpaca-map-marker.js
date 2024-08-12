@@ -1,5 +1,5 @@
 import { LitElement, html, css } from "lit";
-import "./alpaca-map-icon";
+import "./alpaca-map-icon.js";
 
 export default class AlpacaMapMarker extends LitElement {
   static properties = {
