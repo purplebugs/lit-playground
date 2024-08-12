@@ -3,18 +3,8 @@ import { LitElement, html, css } from "lit";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 import STYLED_MAP_TYPE from "./styles-map";
 import stylesGoogle from "./styles-google";
-import {
-  iconStyles,
-  iconBed,
-  iconCalendarCheck,
-  iconHandshake,
-  iconHouseFlag,
-  iconKey,
-  iconMars,
-  iconPersonHiking,
-  iconStore,
-} from "./svg-icons";
 import "./alpaca-map-marker";
+import "./alpaca-map-icon";
 
 export default class AlpacaMap extends LitElement {
   static properties = {
@@ -25,7 +15,6 @@ export default class AlpacaMap extends LitElement {
 
   static styles = [
     stylesGoogle,
-    iconStyles,
     css`
       /********* Overall layout *********/
 
@@ -153,18 +142,6 @@ export default class AlpacaMap extends LitElement {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-        }
-
-        .icon {
-          padding: 0 0.1em 0 0.1em;
-        }
-
-        svg {
-          font-size: 1.5em;
-
-          path {
-            fill: currentcolor;
-          }
         }
 
         input[type="checkbox"] {
@@ -406,21 +383,24 @@ export default class AlpacaMap extends LitElement {
               <span class="toggle">
                 <input type="checkbox" id="public" name="public" checked />
                 <label for="public">
-                  ${iconHouseFlag().htmlObject}Public farms</label
+                  <alpaca-map-icon icon="houseFlag"></alpaca-map-icon>Public
+                  farms</label
                 >
               </span>
 
               <span class="toggle">
                 <input type="checkbox" id="private" name="private" checked />
                 <label for="private"
-                  >${iconKey().htmlObject}Private farms</label
+                  ><alpaca-map-icon icon="key"></alpaca-map-icon>Private
+                  farms</label
                 >
               </span>
 
               <span class="toggle">
                 <input type="checkbox" id="alpacaSales" name="alpacaSales" />
                 <label for="alpacaSales"
-                  >${iconHandshake().htmlObject}Alpaca sales</label
+                  ><alpaca-map-icon icon="handShake"></alpaca-map-icon>Alpaca
+                  sales</label
                 >
               </span>
 
@@ -431,20 +411,24 @@ export default class AlpacaMap extends LitElement {
                   name="alpacaWalking"
                 />
                 <label for="alpacaWalking"
-                  >${iconPersonHiking().htmlObject}Alpaca walking</label
+                  ><alpaca-map-icon icon="personHiking"></alpaca-map-icon>Alpaca
+                  walking</label
                 >
               </span>
 
               <span class="toggle">
                 <input type="checkbox" id="bookable" name="bookable" />
                 <label for="bookable"
-                  >${iconCalendarCheck().htmlObject}Bookable</label
+                  ><alpaca-map-icon icon="calendarCheck"></alpaca-map-icon
+                  >Bookable</label
                 >
               </span>
 
               <span class="toggle">
                 <input type="checkbox" id="shop" name="shop" />
-                <label for="shop">${iconStore().htmlObject}Shop</label>
+                <label for="shop"
+                  ><alpaca-map-icon icon="store"></alpaca-map-icon>Shop</label
+                >
               </span>
 
               <span class="toggle">
@@ -454,14 +438,16 @@ export default class AlpacaMap extends LitElement {
                   name="overnightStay"
                 />
                 <label for="overnightStay"
-                  >${iconBed().htmlObject}Overnight stay</label
+                  ><alpaca-map-icon icon="bed"></alpaca-map-icon>Overnight
+                  stay</label
                 >
               </span>
 
               <span class="toggle">
                 <input type="checkbox" id="studServices" name="studServices" />
                 <label for="studServices"
-                  >${iconMars().htmlObject}Stud services</label
+                  ><alpaca-map-icon icon="mars"></alpaca-map-icon>Stud
+                  services</label
                 >
               </span>
             </div>
