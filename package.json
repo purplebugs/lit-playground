@@ -1,8 +1,13 @@
 {
-  "name": "map-component",
+  "name": "@purplebugs/alpaca-map",
   "type": "module",
-  "version": "1.0.0",
-  "main": "src/index.js",
+  "version": "0.0.1",
+  "main": "src/alpaca-map.js",
+  "files": [
+    "package.json",
+    "README.md",
+    "src"
+  ],
   "scripts": {
     "build:watch": "node --watch-path=./src build.js",
     "build": "node build.js",

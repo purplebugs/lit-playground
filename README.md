@@ -1,6 +1,6 @@
-# Lit Playground ⛹️‍♀️
+# Alpaca Map Web Component 🦙
 
-To try out creating web components using [lit](https://lit.dev/)
+Web component created using [lit](https://lit.dev/)
 
 ## Audience 🗺️
 
@@ -16,17 +16,19 @@ To try out creating web components using [lit](https://lit.dev/)
    <link href="/assets/fonts_google/poppins/fonts.css" rel="stylesheet" />
    ```
 
-1. Copy and paste the following code inside the `<body></body>` tag of website where the component should appear
+1. Generate a [google maps API key](https://developers.google.com/maps/documentation/javascript/get-api-key)
 
-   ```
-   <alpaca-map key="-TODO-"></alpaca-map>
-   ```
+1. Copy and paste the following code inside the `<body></body>` tag of website where the component should appear, replacing `GOOGLE-API-KEY` with your key
+
+```
+<alpaca-map key="GOOGLE-API-KEY"></alpaca-map>
+```
 
 1. Optional. To center the map on a favourite farm, replace the latitude and longitude with its `centerLat` and `centerLng` coordinates
 
-   ```
-   <alpaca-map key="-TODO-" centerLat="-33.8688" centerLng="151.2093"></alpaca-map>
-   ```
+```
+   <alpaca-map key="GOOGLE-API-KEY" centerLat="-33.8688" centerLng="151.2093"></alpaca-map>
+```
 
 ## For developers 🤖
 
