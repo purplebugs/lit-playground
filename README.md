@@ -30,6 +30,12 @@ Web component created using [lit](https://lit.dev/)
    <alpaca-map key="GOOGLE-API-KEY" centerLat="-33.8688" centerLng="151.2093"></alpaca-map>
 ```
 
+1. Optional. To override the data source, set the value of `dataSource`, eg
+
+```
+   <alpaca-map key="GOOGLE-API-KEY" dataSource="https://www.replace-me.com/api/cool-api"></alpaca-map>
+```
+
 ## For developers 🤖
 
 ### Install app 🪴
