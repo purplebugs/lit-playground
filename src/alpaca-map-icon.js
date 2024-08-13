@@ -120,9 +120,6 @@ export default class AlpacaMapIcon extends LitElement {
       case "store":
         icon = this._iconStore();
         break;
-      case "store":
-        icon = this._iconStore();
-        break;
       default:
         return "";
     }
