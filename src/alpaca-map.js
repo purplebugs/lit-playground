@@ -11,6 +11,7 @@ export default class AlpacaMap extends LitElement {
     key: { type: String },
     centerLat: { type: Number },
     centerLng: { type: Number },
+    dataSource: { type: String },
   };
 
   static styles = [
@@ -172,6 +173,7 @@ export default class AlpacaMap extends LitElement {
     this.map;
     this.centerLat = 60.472;
     this.centerLng = 8.4689;
+    this.dataSource = "http://localhost:3000/api/companies"; // TODO set default depending on environment
     this.farms = [];
     this.cluster = null;
   }
@@ -223,8 +225,8 @@ export default class AlpacaMap extends LitElement {
 
   // When element has rendered markup in the DOM firstUpdated() is called
   async firstUpdated() {
-    async function fetchFarms() {
-      const response = await fetch("http://localhost:3000/api/companies"); // TODO set host to correct environment
+    async function fetchFarms(dataSource) {
+      const response = await fetch(dataSource);
       const farms = await response.json();
       console.log("farms", farms);
 
@@ -236,7 +238,7 @@ export default class AlpacaMap extends LitElement {
     console.log("center", center);
 
     // Load data to populate the map
-    this.farms = await fetchFarms();
+    this.farms = await fetchFarms(this.dataSource);
 
     // Import Google Map scripts so we can use them
     const { Map, InfoWindow } = await google.maps.importLibrary("maps");
