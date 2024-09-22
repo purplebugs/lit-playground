@@ -8,6 +8,7 @@ const inputOptions = {
   external: ['lit'],
   plugins: [
     rollupPluginResolve({ 
+      exportConditions: ['production'],
       preferBuiltins: true 
     }),
     rollupPluginCommonjs({ 

@@ -1,6 +1,7 @@
 import { compareExact, compareSparse } from "./utils.js";
 import { LitElement, html, css } from "lit";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
+import { Loader } from "@googlemaps/js-api-loader";
 
 import STYLED_MAP_TYPE from "./styles-map.js";
 import stylesGoogle from "./styles-google.js";
@@ -9,7 +10,7 @@ import "./alpaca-map-icon.js";
 
 export default class AlpacaMap extends LitElement {
   static properties = {
-    key: { type: String },
+    apiKey: { type: String },
     centerLat: { type: Number },
     centerLng: { type: Number },
     dataSource: { type: String },
@@ -197,68 +198,41 @@ export default class AlpacaMap extends LitElement {
 
   constructor() {
     super();
-    this.key;
     this.map;
+    this.apiKey = '';
     this.centerLat = 60.472;
     this.centerLng = 8.4689;
     this.dataSource = "http://localhost:3000/api/companies"; // TODO set default depending on environment
     this.farms = [];
-    this.cluster = null;
+    this.cluster = null;    
   }
-
-  // When element is connected to the DOM connectedCallback() is called.
-  // This is needed in order to know the value of this.key which is passed in from the attribute
 
   connectedCallback() {
-    super.connectedCallback();
+    super.connectedCallback()
 
-    // This loads the google scripts.
-    // We do this here, because at this point we have values from the attributes set on the element
-    ((g) => {
-      var h,
-        a,
-        k,
-        p = "The Google Maps JavaScript API",
-        c = "google",
-        l = "importLibrary",
-        q = "__ib__",
-        m = document,
-        b = window;
-      b = b[c] || (b[c] = {});
-      var d = b.maps || (b.maps = {}),
-        r = new Set(),
-        e = new URLSearchParams(),
-        u = () =>
-          h ||
-          (h = new Promise(async (f, n) => {
-            await (a = m.createElement("script"));
-            e.set("libraries", [...r] + "");
-            for (k in g)
-              e.set(
-                k.replace(/[A-Z]/g, (t) => "_" + t[0].toLowerCase()),
-                g[k]
-              );
-            e.set("callback", c + ".maps." + q);
-            a.src = `https://maps.${c}apis.com/maps/api/js?` + e;
-            d[q] = f;
-            a.onerror = () => (h = n(Error(p + " could not load.")));
-            a.nonce = m.querySelector("script[nonce]")?.nonce || "";
-            m.head.append(a);
-          }));
-      d[l]
-        ? console.warn(p + " only loads once. Ignoring:", g)
-        : (d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)));
-    })({ key: this.key, v: "weekly" });
+    console.log('Using the followig ApiKey', this.apiKey)
+
+    // Ref; https://developers.google.com/maps/documentation/javascript/load-maps-js-api#js-api-loader
+    const loader = new Loader({
+      apiKey: this.apiKey,
+      version: "weekly",
+    });
+    
+    loader.load().then(async () => {
+      await this.initMap();
+    });
   }
 
+
+
   // When element has rendered markup in the DOM firstUpdated() is called
-  async firstUpdated() {
+  async initMap() {
     async function fetchFarms(dataSource) {
       let arr = [];
       try {
         const response = await fetch(dataSource);
         const farms = await response.json();
-        console.log("farms", farms);
+        // console.log("farms", farms);
   
         arr = farms?.items || [];
       } catch(error) {
@@ -270,12 +244,12 @@ export default class AlpacaMap extends LitElement {
     // Set default location
     const center = { lat: this.centerLat, lng: this.centerLng };
 
-    // Load data to populate the map
-    this.farms = await fetchFarms(this.dataSource);
-
     // Import Google Map scripts so we can use them
     const { Map, InfoWindow } = await google.maps.importLibrary("maps");
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+    // Load data to populate the map
+    this.farms = await fetchFarms(this.dataSource);
 
     // Get the element in the shadow DOM to render the map in
     const el = this.renderRoot.querySelector("#map");
@@ -353,14 +327,7 @@ export default class AlpacaMap extends LitElement {
       map: this.map,
       algorithmOptions: {
         radius: 100,
-        /*
-        Ref: https://www.npmjs.com/package/supercluster
-        minPoints: 10,
-        minZoom: 4,
-        maxZoom: 16,
-        radius: 100,
-        maxZoom: 16,
-        */
+
       },
     });
     this.cluster.addMarkers(markers);
