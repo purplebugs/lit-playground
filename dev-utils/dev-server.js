@@ -8,7 +8,7 @@ const fastify = Fastify({
 });
 
 fastify.register(fastifyStatic, {
-  root: path.join(import.meta.dirname, "./public"),
+  root: path.join(import.meta.dirname, "../public"),
   prefix: "/",
 });
 

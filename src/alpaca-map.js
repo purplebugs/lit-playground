@@ -1,6 +1,8 @@
 import { compareExact, compareSparse } from "./utils.js";
 import { LitElement, html, css } from "lit";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
+import { Loader } from "@googlemaps/js-api-loader";
+
 import STYLED_MAP_TYPE from "./styles-map.js";
 import stylesGoogle from "./styles-google.js";
 import "./alpaca-map-marker.js";
@@ -8,7 +10,7 @@ import "./alpaca-map-icon.js";
 
 export default class AlpacaMap extends LitElement {
   static properties = {
-    key: { type: String },
+    apiKey: { type: String },
     centerLat: { type: Number },
     centerLng: { type: Number },
     dataSource: { type: String },
@@ -18,8 +20,19 @@ export default class AlpacaMap extends LitElement {
     stylesGoogle,
     css`
       /********* Overall layout *********/
-
       :host {
+        background-color: white;
+        display: inline-block;
+        border: 1px solid black;
+        height: 500px;
+        width: 600px;
+
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 85px 1fr 80px;
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+
         /* Ref: https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design#responsive_typography */
         /* font-size: calc(1.5rem + 3vw); */
 
@@ -55,13 +68,30 @@ export default class AlpacaMap extends LitElement {
         --public-farm: var(--green);
       }
 
-      .web-component-container {
-        border: 1px solid black;
+      /* Custom minimalistic scrollbar */
+      ::-webkit-scrollbar {
+        width: 20px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background-color: transparent;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-color: #d6dee1;
+        border-radius: 20px;
+        border: 6px solid transparent;
+        background-clip: content-box;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: #a8bbbf;
       }
 
       .header-container {
         background-color: white;
-        padding: 0.5em;
+        margin: 0.5em;
+        overflow: hidden;
       }
 
       .map-container {
@@ -119,12 +149,11 @@ export default class AlpacaMap extends LitElement {
         flex-direction: row;
         flex-wrap: nowrap;
         overflow: auto;
-
-        width: 100%;
         box-sizing: border-box;
       }
 
       .toggle {
+        flex: 0 0 auto;
         color: #006ce4;
         background-color: rgba(0, 108, 228, 0.06);
         border: solid #006ce4 0.15em;
@@ -161,7 +190,7 @@ export default class AlpacaMap extends LitElement {
 
       #map {
         height: 100%;
-        width: auto;
+        width: 100%;
         background-color: var(--pale-blue);
       }
     `,
@@ -169,80 +198,58 @@ export default class AlpacaMap extends LitElement {
 
   constructor() {
     super();
-    this.key;
     this.map;
+    this.apiKey = '';
     this.centerLat = 60.472;
     this.centerLng = 8.4689;
     this.dataSource = "http://localhost:3000/api/companies"; // TODO set default depending on environment
     this.farms = [];
-    this.cluster = null;
+    this.cluster = null;    
   }
-
-  // When element is connected to the DOM connectedCallback() is called.
-  // This is needed in order to know the value of this.key which is passed in from the attribute
 
   connectedCallback() {
-    super.connectedCallback();
+    super.connectedCallback()
 
-    // This loads the google scripts.
-    // We do this here, because at this point we have values from the attributes set on the element
-    ((g) => {
-      var h,
-        a,
-        k,
-        p = "The Google Maps JavaScript API",
-        c = "google",
-        l = "importLibrary",
-        q = "__ib__",
-        m = document,
-        b = window;
-      b = b[c] || (b[c] = {});
-      var d = b.maps || (b.maps = {}),
-        r = new Set(),
-        e = new URLSearchParams(),
-        u = () =>
-          h ||
-          (h = new Promise(async (f, n) => {
-            await (a = m.createElement("script"));
-            e.set("libraries", [...r] + "");
-            for (k in g)
-              e.set(
-                k.replace(/[A-Z]/g, (t) => "_" + t[0].toLowerCase()),
-                g[k]
-              );
-            e.set("callback", c + ".maps." + q);
-            a.src = `https://maps.${c}apis.com/maps/api/js?` + e;
-            d[q] = f;
-            a.onerror = () => (h = n(Error(p + " could not load.")));
-            a.nonce = m.querySelector("script[nonce]")?.nonce || "";
-            m.head.append(a);
-          }));
-      d[l]
-        ? console.warn(p + " only loads once. Ignoring:", g)
-        : (d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)));
-    })({ key: this.key, v: "weekly" });
+    console.log('Using the followig ApiKey', this.apiKey)
+
+    // Ref; https://developers.google.com/maps/documentation/javascript/load-maps-js-api#js-api-loader
+    const loader = new Loader({
+      apiKey: this.apiKey,
+      version: "weekly",
+    });
+    
+    loader.load().then(async () => {
+      await this.initMap();
+    });
   }
 
-  // When element has rendered markup in the DOM firstUpdated() is called
-  async firstUpdated() {
-    async function fetchFarms(dataSource) {
-      const response = await fetch(dataSource);
-      const farms = await response.json();
-      console.log("farms", farms);
 
-      return farms?.items || [];
+
+  // When element has rendered markup in the DOM firstUpdated() is called
+  async initMap() {
+    async function fetchFarms(dataSource) {
+      let arr = [];
+      try {
+        const response = await fetch(dataSource);
+        const farms = await response.json();
+        // console.log("farms", farms);
+  
+        arr = farms?.items || [];
+      } catch(error) {
+
+      }
+      return arr;
     }
 
     // Set default location
     const center = { lat: this.centerLat, lng: this.centerLng };
-    console.log("center", center);
-
-    // Load data to populate the map
-    this.farms = await fetchFarms(this.dataSource);
 
     // Import Google Map scripts so we can use them
     const { Map, InfoWindow } = await google.maps.importLibrary("maps");
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+    // Load data to populate the map
+    this.farms = await fetchFarms(this.dataSource);
 
     // Get the element in the shadow DOM to render the map in
     const el = this.renderRoot.querySelector("#map");
@@ -320,14 +327,7 @@ export default class AlpacaMap extends LitElement {
       map: this.map,
       algorithmOptions: {
         radius: 100,
-        /*
-        Ref: https://www.npmjs.com/package/supercluster
-        minPoints: 10,
-        minZoom: 4,
-        maxZoom: 16,
-        radius: 100,
-        maxZoom: 16,
-        */
+
       },
     });
     this.cluster.addMarkers(markers);
@@ -372,126 +372,122 @@ export default class AlpacaMap extends LitElement {
 
     this.cluster.clearMarkers();
     this.cluster.addMarkers(markers);
-
-    console.log("markers.length", markers.length);
   }
 
   render() {
     return html`
-      <section class="web-component-container">
-        <header class="header-container">
-          <form id="form" @change="${this._filterMarkers}">
-            <div class="toggle-group">
-              <span class="toggle">
-                <input type="checkbox" id="public" name="public" checked />
-                <label for="public">
-                  <alpaca-map-icon icon="houseFlag"></alpaca-map-icon>Public
-                  farms</label
-                >
-              </span>
+      <header class="header-container">
+        <form id="form" @change="${this._filterMarkers}">
+          <div class="toggle-group">
+            <span class="toggle">
+              <input type="checkbox" id="public" name="public" checked />
+              <label for="public">
+                <alpaca-map-icon icon="houseFlag"></alpaca-map-icon>Public
+                farms</label
+              >
+            </span>
 
-              <span class="toggle">
-                <input type="checkbox" id="private" name="private" checked />
-                <label for="private"
-                  ><alpaca-map-icon icon="key"></alpaca-map-icon>Private
-                  farms</label
-                >
-              </span>
+            <span class="toggle">
+              <input type="checkbox" id="private" name="private" checked />
+              <label for="private"
+                ><alpaca-map-icon icon="key"></alpaca-map-icon>Private
+                farms</label
+              >
+            </span>
 
-              <span class="toggle">
-                <input type="checkbox" id="alpacaSales" name="alpacaSales" />
-                <label for="alpacaSales"
-                  ><alpaca-map-icon icon="handShake"></alpaca-map-icon>Alpaca
-                  sales</label
-                >
-              </span>
+            <span class="toggle">
+              <input type="checkbox" id="alpacaSales" name="alpacaSales" />
+              <label for="alpacaSales"
+                ><alpaca-map-icon icon="handShake"></alpaca-map-icon>Alpaca
+                sales</label
+              >
+            </span>
 
-              <span class="toggle">
-                <input
-                  type="checkbox"
-                  id="alpacaWalking"
-                  name="alpacaWalking"
-                />
-                <label for="alpacaWalking"
-                  ><alpaca-map-icon icon="personHiking"></alpaca-map-icon>Alpaca
-                  walking</label
-                >
-              </span>
+            <span class="toggle">
+              <input
+                type="checkbox"
+                id="alpacaWalking"
+                name="alpacaWalking"
+              />
+              <label for="alpacaWalking"
+                ><alpaca-map-icon icon="personHiking"></alpaca-map-icon>Alpaca
+                walking</label
+              >
+            </span>
 
-              <span class="toggle">
-                <input type="checkbox" id="bookable" name="bookable" />
-                <label for="bookable"
-                  ><alpaca-map-icon icon="calendarCheck"></alpaca-map-icon
-                  >Bookable</label
-                >
-              </span>
+            <span class="toggle">
+              <input type="checkbox" id="bookable" name="bookable" />
+              <label for="bookable"
+                ><alpaca-map-icon icon="calendarCheck"></alpaca-map-icon
+                >Bookable</label
+              >
+            </span>
 
-              <span class="toggle">
-                <input type="checkbox" id="shop" name="shop" />
-                <label for="shop"
-                  ><alpaca-map-icon icon="store"></alpaca-map-icon>Shop</label
-                >
-              </span>
+            <span class="toggle">
+              <input type="checkbox" id="shop" name="shop" />
+              <label for="shop"
+                ><alpaca-map-icon icon="store"></alpaca-map-icon>Shop</label
+              >
+            </span>
 
-              <span class="toggle">
-                <input
-                  type="checkbox"
-                  id="overnightStay"
-                  name="overnightStay"
-                />
-                <label for="overnightStay"
-                  ><alpaca-map-icon icon="bed"></alpaca-map-icon>Overnight
-                  stay</label
-                >
-              </span>
+            <span class="toggle">
+              <input
+                type="checkbox"
+                id="overnightStay"
+                name="overnightStay"
+              />
+              <label for="overnightStay"
+                ><alpaca-map-icon icon="bed"></alpaca-map-icon>Overnight
+                stay</label
+              >
+            </span>
 
-              <span class="toggle">
-                <input type="checkbox" id="studServices" name="studServices" />
-                <label for="studServices"
-                  ><alpaca-map-icon icon="mars"></alpaca-map-icon>Stud
-                  services</label
-                >
-              </span>
-            </div>
-          </form>
-        </header>
-        <div class="map-container">
-          <div id="map"></div>
+            <span class="toggle">
+              <input type="checkbox" id="studServices" name="studServices" />
+              <label for="studServices"
+                ><alpaca-map-icon icon="mars"></alpaca-map-icon>Stud
+                services</label
+              >
+            </span>
+          </div>
+        </form>
+      </header>
+      
+      <div class="map-container" id="map"></div>
+
+      <footer class="footer-container">
+        <div>
+          <a
+            href="https://www.alpaca.life"
+            target="_blank"
+            data-testid="link-logo"
+            ><img
+              src="/assets/images/alpaca.life.logo.png"
+              width="100px"
+              height="100px"
+              alt="Alpaca Life logo"
+          /></a>
         </div>
-        <footer class="footer-container">
-          <div>
-            <a
-              href="https://www.alpaca.life"
-              target="_blank"
-              data-testid="link-logo"
-              ><img
-                src="/assets/images/alpaca.life.logo.png"
-                width="100px"
-                height="100px"
-                alt="Alpaca Life logo"
-            /></a>
-          </div>
-          <div class="footer-message">
-            Find alpacas,<br />
-            farms and more:<br />
-            <a href="https://www.alpaca.life" target="_blank"
-              >www.alpaca.life</a
-            >
-          </div>
-          <div>
-            <a
-              href="https://ko-fi.com/anitalipsky"
-              target="_blank"
-              data-testid="link-support"
-              ><img
-                id="ko-fi"
-                src="/assets/images/kofi_bg_tag_white.svg"
-                width="100px"
-                alt="Buy me a ko-fi"
-            /></a>
-          </div>
-        </footer>
-      </section>
+        <div class="footer-message">
+          Find alpacas,<br />
+          farms and more:<br />
+          <a href="https://www.alpaca.life" target="_blank"
+            >www.alpaca.life</a
+          >
+        </div>
+        <div>
+          <a
+            href="https://ko-fi.com/anitalipsky"
+            target="_blank"
+            data-testid="link-support"
+            ><img
+              id="ko-fi"
+              src="/assets/images/kofi_bg_tag_white.svg"
+              width="100px"
+              alt="Buy me a ko-fi"
+          /></a>
+        </div>
+      </footer>
     `;
   }
 }

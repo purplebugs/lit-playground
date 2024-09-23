@@ -2,37 +2,43 @@
   "name": "@purplebugs/alpaca-map",
   "type": "module",
   "version": "0.0.4",
-  "main": "src/alpaca-map.js",
+  "exports": {
+    ".": "./build/node/src/alpaca-map.mjs"
+  },
   "files": [
     "package.json",
     "README.md",
+    "build",
     "src"
   ],
   "scripts": {
-    "build:watch": "node --watch-path=./src build.js",
-    "build": "node build.js",
+    "build:publish:node": "node ./dev-utils/pub-build.js",
+    "build:watch": "node --watch-path=./src ./dev-utils/dev-build.js",
+    "build": "node ./dev-utils/dev-build.js",
     "prettier": "prettier . --write",
-    "start": "node dev-server.js",
+    "start": "node ./dev-utils/dev-server.js",
     "test": "node --test",
-    "test-ui": "playwright test"
+    "test-ui": "playwright test",
+    "prepublishOnly": "npm run build:publish:node"
   },
   "author": "",
   "license": "MIT",
   "description": "",
   "devDependencies": {
+    "@googlemaps/js-api-loader": "1.16.8",
+    "@googlemaps/markerclusterer": "^2.5.3",
     "@fastify/static": "7.0.4",
     "@playwright/test": "^1.45.1",
     "@rollup/plugin-commonjs": "26.0.1",
     "@rollup/plugin-node-resolve": "15.2.3",
     "@rollup/plugin-replace": "5.0.7",
     "@rollup/plugin-terser": "0.4.4",
-    "@types/node": "^20.14.10",
-    "fastify": "4.28.0",
-    "prettier": "3.3.2",
-    "rollup": "4.18.0"
+    "@types/node": "20.14.10",
+    "fastify": "4.28.1",
+    "prettier": "3.3.3",
+    "rollup": "4.21.3"
   },
   "dependencies": {
-    "@googlemaps/markerclusterer": "^2.5.3",
-    "lit": "^3.1.4"
+    "lit": "3.1.4"
   }
 }
