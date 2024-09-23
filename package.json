@@ -18,7 +18,8 @@
     "prettier": "prettier . --write",
     "start": "node ./dev-utils/dev-server.js",
     "test": "node --test",
-    "test-ui": "playwright test"
+    "test-ui": "playwright test",
+    "prepublishOnly": "npm run build:publish:node"
   },
   "author": "",
   "license": "MIT",
