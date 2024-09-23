@@ -21,19 +21,19 @@ Web component created using [lit](https://lit.dev/)
 1. Copy and paste the following code inside the `<body></body>` tag of website where the component should appear, replacing `GOOGLE-API-KEY` with your key
 
 ```
-<alpaca-map key="GOOGLE-API-KEY"></alpaca-map>
+<alpaca-map apiKey="GOOGLE-API-KEY"></alpaca-map>
 ```
 
 1. Optional. To center the map on a favourite farm, replace the latitude and longitude with its `centerLat` and `centerLng` coordinates
 
 ```
-   <alpaca-map key="GOOGLE-API-KEY" centerLat="-33.8688" centerLng="151.2093"></alpaca-map>
+   <alpaca-map apiKey="GOOGLE-API-KEY" centerLat="-33.8688" centerLng="151.2093"></alpaca-map>
 ```
 
 1. Optional. To override the data source, set the value of `dataSource`, eg
 
 ```
-   <alpaca-map key="GOOGLE-API-KEY" dataSource="https://www.replace-me.com/api/cool-api"></alpaca-map>
+   <alpaca-map apiKey="GOOGLE-API-KEY" dataSource="https://www.replace-me.com/api/cool-api"></alpaca-map>
 ```
 
 ## For developers 🤖
