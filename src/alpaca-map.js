@@ -100,7 +100,7 @@ export default class AlpacaMap extends LitElement {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0.5em 0em 0.5em 0em;
+        padding: 0.5em 0.25em 0.5em 0.25em;
 
         background-color: white;
 
