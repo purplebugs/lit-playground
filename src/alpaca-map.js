@@ -24,12 +24,10 @@ export default class AlpacaMap extends LitElement {
         background-color: white;
         display: inline-block;
         border: 1px solid black;
-        height: 100%;
-        width: auto;
 
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr 5fr 1fr;
+        grid-template-rows: auto 5fr 1fr;
         grid-column-gap: 0px;
         grid-row-gap: 0px;
 
@@ -90,8 +88,8 @@ export default class AlpacaMap extends LitElement {
 
       .header-container {
         background-color: white;
-        margin: 0.5em;
         overflow: hidden;
+        padding: 0.25em 0em 0.25em 0em;
       }
 
       .map-container {
@@ -102,7 +100,7 @@ export default class AlpacaMap extends LitElement {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0.5em 0.5em 0.5em 0.5em;
+        padding: 0.5em 0em 0.5em 0em;
 
         background-color: white;
 
