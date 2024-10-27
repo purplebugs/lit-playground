@@ -24,12 +24,12 @@ export default class AlpacaMap extends LitElement {
         background-color: white;
         display: inline-block;
         border: 1px solid black;
-        height: 500px;
-        width: 600px;
+        height: 100%;
+        width: auto;
 
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 85px 1fr 80px;
+        grid-template-rows: 1fr 5fr 1fr;
         grid-column-gap: 0px;
         grid-row-gap: 0px;
 
@@ -199,31 +199,29 @@ export default class AlpacaMap extends LitElement {
   constructor() {
     super();
     this.map;
-    this.apiKey = '';
+    this.apiKey = "";
     this.centerLat = 60.472;
     this.centerLng = 8.4689;
     this.dataSource = "http://localhost:3000/api/companies"; // TODO set default depending on environment
     this.farms = [];
-    this.cluster = null;    
+    this.cluster = null;
   }
 
   connectedCallback() {
-    super.connectedCallback()
+    super.connectedCallback();
 
-    console.log('Using the followig ApiKey', this.apiKey)
+    console.log("Using the followig ApiKey", this.apiKey);
 
     // Ref; https://developers.google.com/maps/documentation/javascript/load-maps-js-api#js-api-loader
     const loader = new Loader({
       apiKey: this.apiKey,
       version: "weekly",
     });
-    
+
     loader.load().then(async () => {
       await this.initMap();
     });
   }
-
-
 
   // When element has rendered markup in the DOM firstUpdated() is called
   async initMap() {
@@ -233,11 +231,9 @@ export default class AlpacaMap extends LitElement {
         const response = await fetch(dataSource);
         const farms = await response.json();
         // console.log("farms", farms);
-  
-        arr = farms?.items || [];
-      } catch(error) {
 
-      }
+        arr = farms?.items || [];
+      } catch (error) {}
       return arr;
     }
 
@@ -327,7 +323,6 @@ export default class AlpacaMap extends LitElement {
       map: this.map,
       algorithmOptions: {
         radius: 100,
-
       },
     });
     this.cluster.addMarkers(markers);
@@ -404,11 +399,7 @@ export default class AlpacaMap extends LitElement {
             </span>
 
             <span class="toggle">
-              <input
-                type="checkbox"
-                id="alpacaWalking"
-                name="alpacaWalking"
-              />
+              <input type="checkbox" id="alpacaWalking" name="alpacaWalking" />
               <label for="alpacaWalking"
                 ><alpaca-map-icon icon="personHiking"></alpaca-map-icon>Alpaca
                 walking</label
@@ -431,11 +422,7 @@ export default class AlpacaMap extends LitElement {
             </span>
 
             <span class="toggle">
-              <input
-                type="checkbox"
-                id="overnightStay"
-                name="overnightStay"
-              />
+              <input type="checkbox" id="overnightStay" name="overnightStay" />
               <label for="overnightStay"
                 ><alpaca-map-icon icon="bed"></alpaca-map-icon>Overnight
                 stay</label
@@ -452,7 +439,7 @@ export default class AlpacaMap extends LitElement {
           </div>
         </form>
       </header>
-      
+
       <div class="map-container" id="map"></div>
 
       <footer class="footer-container">
@@ -471,9 +458,7 @@ export default class AlpacaMap extends LitElement {
         <div class="footer-message">
           Find alpacas,<br />
           farms and more:<br />
-          <a href="https://www.alpaca.life" target="_blank"
-            >www.alpaca.life</a
-          >
+          <a href="https://www.alpaca.life" target="_blank">www.alpaca.life</a>
         </div>
         <div>
           <a
