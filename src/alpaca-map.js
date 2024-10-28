@@ -202,7 +202,7 @@ export default class AlpacaMap extends LitElement {
     this.centerLat = 60.472;
     this.centerLng = 8.4689;
     this.dataSource = "http://localhost:3000/api/companies"; // TODO set default depending on environment
-    this.assetSource = "https://www.alpaca.life/public";
+    this.assetSource = "https://www.alpaca.life";
 
     this.farms = [];
     this.cluster = null;
