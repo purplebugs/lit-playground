@@ -450,7 +450,7 @@ export default class AlpacaMap extends LitElement {
             target="_blank"
             data-testid="link-logo"
             ><img
-              src="${this.assetSource}/images/alpaca.life.logo.png"
+              src="${this.assetSource}/alpaca.life.logo.png"
               width="100px"
               height="100px"
               alt="Alpaca Life logo"
