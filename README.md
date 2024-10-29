@@ -13,7 +13,7 @@ Web component created using [lit](https://lit.dev/)
 
    ```
    <meta name="viewport" content="width=device-width,initial-scale=1" />
-   <link href="/fonts_google/poppins/fonts.css" rel="stylesheet" />
+   <link href="/assets/fonts_google/poppins/fonts.css" rel="stylesheet" />
    ```
 
 1. Generate a [google maps API key](https://developers.google.com/maps/documentation/javascript/get-api-key)
