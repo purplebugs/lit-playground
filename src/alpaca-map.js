@@ -14,6 +14,7 @@ export default class AlpacaMap extends LitElement {
     centerLat: { type: Number },
     centerLng: { type: Number },
     dataSource: { type: String },
+    assetSource: { type: String },
   };
 
   static styles = [
@@ -201,6 +202,8 @@ export default class AlpacaMap extends LitElement {
     this.centerLat = 60.472;
     this.centerLng = 8.4689;
     this.dataSource = "http://localhost:3000/api/companies"; // TODO set default depending on environment
+    this.assetSource = "https://www.alpaca.life/assets";
+
     this.farms = [];
     this.cluster = null;
   }
@@ -447,7 +450,7 @@ export default class AlpacaMap extends LitElement {
             target="_blank"
             data-testid="link-logo"
             ><img
-              src="/assets/images/alpaca.life.logo.png"
+              src="${this.assetSource}/images/alpaca.life.logo.png"
               width="100px"
               height="100px"
               alt="Alpaca Life logo"
@@ -465,7 +468,7 @@ export default class AlpacaMap extends LitElement {
             data-testid="link-support"
             ><img
               id="ko-fi"
-              src="/assets/images/kofi_bg_tag_white.svg"
+              src="${this.assetSource}/images/kofi_bg_tag_white.svg"
               width="100px"
               alt="Buy me a ko-fi"
           /></a>
