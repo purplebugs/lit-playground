@@ -4,7 +4,6 @@ import { MarkerClusterer } from "@googlemaps/markerclusterer";
 import { Loader } from "@googlemaps/js-api-loader";
 
 import STYLED_MAP_TYPE from "./styles-map.js";
-import stylesGoogle from "./styles-google.js";
 import "./alpaca-map-marker.js";
 import "./alpaca-map-icon.js";
 
@@ -18,7 +17,6 @@ export default class AlpacaMap extends LitElement {
   };
 
   static styles = [
-    stylesGoogle,
     css`
       /********* Overall layout *********/
       :host {

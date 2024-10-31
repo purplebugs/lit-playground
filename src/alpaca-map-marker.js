@@ -36,11 +36,6 @@ export default class AlpacaMapMarker extends LitElement {
         box-shadow: 10px 10px 5px #0003;
         color: var(--almost-black);
 
-        /* Override google map font to avoid flicker when load */
-        font:
-          400 1.5em Poppins,
-          Arial,
-          sans-serif;
         padding: 0.75rem;
 
         width: auto;
