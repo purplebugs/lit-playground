@@ -101,6 +101,20 @@ export default class AlpacaMapMarker extends LitElement {
           box-shadow: 0 0.25rem 0 0.125rem var(--gray-400);
         }
 
+        .directions {
+          display: flex;
+          flex-basis: auto;
+          align-items: center;
+        }
+
+        /* Icons */
+
+        .icon {
+          &.link-arrow {
+            margin-left: 0.5rem;
+          }
+        }
+
         &.public .icon {
           color: var(--green);
         }
@@ -197,9 +211,9 @@ export default class AlpacaMapMarker extends LitElement {
           title="Google directions"
         >
           <div class="farm-marker-link">
-            <address>
+            <address class="directions">
               <alpaca-map-icon icon="car" class="icon"></alpaca-map-icon
-              ><span class="text">Directions</span
+              ><span>Directions</span
               ><alpaca-map-icon
                 icon="arrowUpRightFromSquare"
                 class="icon link-arrow"
