@@ -131,6 +131,18 @@ export default class AlpacaMapMarker extends LitElement {
       .farm-marker.private::after {
         border-top: 8px solid var(--brown);
       }
+
+      /********* Links *********/
+
+      a {
+        color: var(--dark-blue);
+      }
+
+      a:hover {
+        color: var(--pale-blue);
+        text-decoration: underline;
+        text-decoration-thickness: 0.5em;
+      }
     `,
   ];
 
@@ -186,15 +198,12 @@ export default class AlpacaMapMarker extends LitElement {
         >
           <div class="farm-marker-link">
             <address>
-              <span class="icon"
-                ><alpaca-map-icon
-                  icon="car"
-                  class="icon"
-                ></alpaca-map-icon></span
+              <alpaca-map-icon icon="car" class="icon"></alpaca-map-icon
               ><span class="text">Directions</span
-              ><span class="icon link-arrow">
-                <alpaca-map-icon icon="arrowUpRightFromSquare"></alpaca-map-icon
-              ></span>
+              ><alpaca-map-icon
+                icon="arrowUpRightFromSquare"
+                class="icon link-arrow"
+              ></alpaca-map-icon>
             </address>
           </div>
         </a>
