@@ -279,6 +279,8 @@ export default class AlpacaMap extends LitElement {
 
     const markers = this.farms.map((farm) => {
       const content = document.createElement("alpaca-map-marker");
+      content.setAttribute("linkToFarmPage", this.linkToFarmPage);
+
       content.setAttribute("id", farm?.id);
       content.setAttribute("name", farm?.name);
       content.setAttribute(

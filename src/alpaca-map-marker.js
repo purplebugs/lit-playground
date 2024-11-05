@@ -1,4 +1,4 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, nothing, html, css } from "lit";
 import "./alpaca-map-icon.js";
 
 export default class AlpacaMapMarker extends LitElement {
@@ -20,6 +20,7 @@ export default class AlpacaMapMarker extends LitElement {
         }
       },
     } /* If a property changes the element re-renders */,
+    linkToFarmPage: { type: Boolean },
   };
 
   static styles = [
@@ -138,6 +139,16 @@ export default class AlpacaMapMarker extends LitElement {
     super.connectedCallback();
   }
 
+  renderLinkToFarmPage() {
+    if (this.linkToFarmPage) {
+      return html` <address>
+        <a href="https://www.alpaca.life/farm/${this.id}">Farm info</a>
+      </address>`;
+    }
+
+    return html`${nothing}`;
+  }
+
   render() {
     return html` <div class="farm ${this.category} ${this.highlight}">
       <div class="summary">
@@ -151,11 +162,9 @@ export default class AlpacaMapMarker extends LitElement {
         <h4>${this.name}</h4>
         <address>${this.city}</address>
         <address>${this.address}</address>
-        <!-- TODO: START. Only include this if "linkToFarmPage" attribute is true -->
-        <address>
-          <a href="https://www.alpaca.life/farm/${this.id}">Farm info</a>
-        </address>
-        <!-- TODO: END -->
+
+        ${this.renderLinkToFarmPage()}
+
         <address>
           <a
             href="${this.directions}"
