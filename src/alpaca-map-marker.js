@@ -36,7 +36,9 @@ export default class AlpacaMapMarker extends LitElement {
         box-shadow: 10px 10px 5px #0003;
         color: var(--almost-black);
 
-        font-family: sans-serif; /* Avoid font flicker when load */
+        /* Avoid font flicker when load */
+        /* font-family: sans-serif; */
+
         padding: 0.75rem;
 
         width: auto;
