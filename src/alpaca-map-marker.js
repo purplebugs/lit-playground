@@ -1,8 +1,9 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, nothing, html, css } from "lit";
 import "./alpaca-map-icon.js";
 
 export default class AlpacaMapMarker extends LitElement {
   static properties = {
+    id: { type: Number },
     name: { type: String },
     category: { type: String },
     count: { type: Number },
@@ -19,6 +20,7 @@ export default class AlpacaMapMarker extends LitElement {
         }
       },
     } /* If a property changes the element re-renders */,
+    linkToFarmPage: { type: Boolean },
   };
 
   constructor() {
@@ -39,6 +41,27 @@ export default class AlpacaMapMarker extends LitElement {
     super.connectedCallback();
   }
 
+  renderLinkToFarmPage() {
+    if (this.linkToFarmPage) {
+      return html`
+        <a
+          href="https://www.alpaca.life/farm/${this.id}"
+          onclick="event.stopPropagation()"
+        >
+          <div class="farm-marker-link">
+            <address class="farm-info">
+              <span class="icon"
+                ><alpaca-map-icon icon="circleInfo"></alpaca-map-icon></span
+              ><span class="text">Farm info</span>
+            </address>
+          </div>
+        </a>
+      `;
+    }
+
+    return html`${nothing}`;
+  }
+
   createRenderRoot() {
     // Turns off shadow DOM.
     // Since AlpacaMapMarker is not used externally, only by AlpacaMap then we want to inherit all styling, so turn off shadow DOM.
@@ -55,32 +78,32 @@ export default class AlpacaMapMarker extends LitElement {
         </div>
         <div class="count">${this.count} 🦙</div>
       </div>
-
       <div class="more-info ${this.highlight}">
         <div class="name">
           <h2>${this.name}</h2>
         </div>
-
         <div class="city">
           <address>
             <alpaca-map-icon icon="locationDot"></alpaca-map-icon>${this.city}
           </address>
         </div>
-
         <div class="address">
           <address>${this.address}</address>
         </div>
+
+        ${this.renderLinkToFarmPage()}
 
         <a
           href="${this.directions}"
           target="_blank"
           rel="noreferrer"
           title="Google directions"
+          onclick="event.stopPropagation()"
         >
           <div class="farm-marker-link">
             <address class="directions">
               <alpaca-map-icon icon="car" class="icon"></alpaca-map-icon
-              ><span>Directions</span
+              ><span class="text">Directions</span
               ><alpaca-map-icon
                 icon="arrowUpRightFromSquare"
                 class="icon link-arrow"

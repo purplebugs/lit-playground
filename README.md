@@ -35,6 +35,17 @@ Web component created using [lit](https://lit.dev/)
    <alpaca-map apiKey="GOOGLE-API-KEY" dataSource="https://www.replace-me.com/api/cool-api"></alpaca-map>
 ```
 
+1. Optional. To override map markers linking to the farm page, set the value of `linkToFarmPage`
+
+- `true`- shows link on map marker to www.alpaca.life farm info page
+- `false`- does not show link
+
+eg
+
+```
+   <alpaca-map apiKey="GOOGLE-API-KEY" linkToFarmPage=false></alpaca-map>
+```
+
 ## For developers 🤖
 
 ### Install app 🪴

@@ -81,8 +81,9 @@ export default css`
       box-shadow: 0 0.25rem 0 0.125rem var(--gray-400);
     }
 
-    .directions,
-    .city address {
+    .city address,
+    .farm-info,
+    .directions {
       display: flex;
       flex-basis: auto;
       align-items: center;
