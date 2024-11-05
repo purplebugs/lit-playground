@@ -76,6 +76,15 @@ export default class AlpacaMapMarker extends LitElement {
         font-size: medium;
       }
 
+      .icon {
+        position: relative;
+        margin-left: 0.5rem;
+      }
+
+      .link-arrow {
+        top: 0.25rem;
+      }
+
       /********* Farm styles in highlighted state *********/
 
       /*       .farm.highlight {
@@ -147,8 +156,11 @@ export default class AlpacaMapMarker extends LitElement {
             target="_blank"
             rel="noreferrer"
             title="Google directions"
-            >Directions</a
-          >
+            >Directions<alpaca-map-icon
+              icon="arrowUpRightFromSquare"
+              class="icon link-arrow"
+            ></alpaca-map-icon>
+          </a>
         </address>
       </div>
     </div>`;
