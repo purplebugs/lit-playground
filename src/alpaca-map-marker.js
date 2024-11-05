@@ -23,98 +23,113 @@ export default class AlpacaMapMarker extends LitElement {
 
   static styles = [
     css`
-      /********* Farm styles in unhighlighted state *********/
+      /********* FARM MARKERS *********/
       /* Ref: https://developers.google.com/maps/documentation/javascript/advanced-markers/html-markers#maps_advanced_markers_html-css */
 
-      .farm {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      /* Farm markers */
 
-        background-color: white;
-        border-radius: 1rem;
-        box-shadow: 10px 10px 5px #0003;
-        color: var(--almost-black);
-
-        /* Avoid font flicker when load */
-        /* font-family: sans-serif; */
-
+      .farm-marker {
         padding: 0.75rem;
-
+        background-color: white;
+        color: var(--almost-black);
+        transition: all 0.3s ease-out;
         width: auto;
         max-width: 15rem;
+        border-radius: 1rem;
+        border-width: 0.2rem;
+        border-style: solid;
+
+        &.public {
+          border-color: var(--public-farm);
+        }
+
+        &.private {
+          border-color: var(--private-farm);
+        }
+
+        .summary {
+          display: flex;
+          gap: 0.5rem;
+          align-items: center;
+          font-size: 1.5rem;
+        }
+
+        .count {
+          font-weight: bolder;
+        }
+
+        .more-info {
+          display: flex;
+          border-radius: 0.5rem;
+          flex: 1;
+          flex-direction: column;
+
+          &:not(.highlight) {
+            display: none;
+          }
+        }
+
+        .city {
+          border-radius: 10px;
+          padding: 0.2rem 0.5rem;
+          border: 1px solid var(--gray-100);
+          max-width: fit-content;
+        }
+
+        .address {
+          font-size: 1rem;
+          font-style: normal;
+          margin-top: 1rem;
+        }
+
+        .farm-marker-link {
+          font-size: 1rem;
+          font-style: normal;
+          margin: 1rem 0 0.5rem 0;
+          border-radius: 1rem;
+          padding: 1rem 0.5rem;
+          border: 0.125rem solid var(--gray-500);
+          box-shadow: 0 0.25rem 0 0.125rem var(--gray-200);
+
+          .text {
+            margin: 0 0 0 1rem;
+          }
+        }
+
+        .farm-marker-link:hover {
+          border-color: var(--pink);
+          box-shadow: 0 0.25rem 0 0.125rem var(--gray-400);
+        }
+
+        &.public .icon {
+          color: var(--green);
+        }
+
+        &.private .icon {
+          color: var(--brown);
+        }
       }
 
-      .farm::after {
-        border-left: 9px solid transparent;
-        border-right: 9px solid transparent;
+      .farm-marker::after {
+        /* Pointer under farm marker - taken from css in https://developers.google.com/maps/documentation/javascript/advanced-markers/html-markers*/
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
         content: "";
         height: 0;
         left: 50%;
         position: absolute;
         top: 100%;
-        transform: translate(-50%);
+        transform: translateX(-50%) translateY(calc(0.1em * -1));
+        /* translateY inspired from hotels.com */
         width: 0;
-        z-index: 1;
       }
 
-      .farm .summary {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        font-size: 1.5rem;
-        gap: 0.5rem;
+      .farm-marker.public::after {
+        border-top: 8px solid var(--green);
       }
 
-      .farm .details {
-        display: none;
-        flex-direction: column;
-        flex: 1;
-        gap: 1rem;
-        padding: 0rem 1rem 0rem 1rem;
-        font-size: medium;
-      }
-
-      .icon {
-        position: relative;
-        margin-left: 0.5rem;
-      }
-
-      .link-arrow {
-        top: 0.25rem;
-      }
-
-      /********* Farm styles in highlighted state *********/
-
-      /*       .farm.highlight {
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
-        height: 80px;
-        padding: 8px 15px;
-        width: auto;
-      } */
-
-      .farm.highlight .details {
-        display: flex;
-      }
-
-      /********* Farm category colours *********/
-      .farm.private {
-        border: 0.2em solid var(--private-farm);
-      }
-
-      .farm.public {
-        border: 0.2em solid var(--public-farm);
-      }
-
-      .farm.private::after {
-        border-top: 9px solid var(--private-farm);
-      }
-
-      .farm.public::after {
-        border-top: 9px solid var(--public-farm);
+      .farm-marker.private::after {
+        border-top: 8px solid var(--brown);
       }
     `,
   ];
@@ -138,30 +153,51 @@ export default class AlpacaMapMarker extends LitElement {
   }
 
   render() {
-    return html` <div class="farm ${this.category} ${this.highlight}">
+    return html` <div class="farm-marker ${this.category} ${this.highlight}">
       <div class="summary">
-        <alpaca-map-icon
-          icon="${this.category === "private" ? "key" : "houseFlag"}"
-        ></alpaca-map-icon>
+        <div class="icon">
+          <alpaca-map-icon
+            icon="${this.category === "private" ? "key" : "houseFlag"}"
+          ></alpaca-map-icon>
+        </div>
         <div class="count">${this.count} 🦙</div>
       </div>
 
-      <div class="details">
-        <h4>${this.name}</h4>
-        <address>${this.city}</address>
-        <address>${this.address}</address>
-        <address>
-          <a
-            href="${this.directions}"
-            target="_blank"
-            rel="noreferrer"
-            title="Google directions"
-            >Directions<alpaca-map-icon
-              icon="arrowUpRightFromSquare"
-              class="icon link-arrow"
-            ></alpaca-map-icon>
-          </a>
-        </address>
+      <div class="more-info ${this.highlight}">
+        <div class="name">
+          <h2>${this.name}</h2>
+        </div>
+
+        <div class="city">
+          <address>
+            <alpaca-map-icon icon="locationDot"></alpaca-map-icon>${this.city}
+          </address>
+        </div>
+
+        <div class="address">
+          <address>${this.address}</address>
+        </div>
+
+        <a
+          href="${this.directions}"
+          target="_blank"
+          rel="noreferrer"
+          title="Google directions"
+        >
+          <div class="farm-marker-link">
+            <address>
+              <span class="icon"
+                ><alpaca-map-icon
+                  icon="car"
+                  class="icon"
+                ></alpaca-map-icon></span
+              ><span class="text">Directions</span
+              ><span class="icon link-arrow">
+                <alpaca-map-icon icon="arrowUpRightFromSquare"></alpaca-map-icon
+              ></span>
+            </address>
+          </div>
+        </a>
       </div>
     </div>`;
   }
