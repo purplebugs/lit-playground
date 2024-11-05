@@ -68,6 +68,9 @@ export default class AlpacaMapMarker extends LitElement {
         display: none;
         flex-direction: column;
         flex: 1;
+        gap: 1rem;
+        padding: 0rem 1rem 0rem 1rem;
+        font-size: medium;
       }
 
       /********* Farm styles in highlighted state *********/
@@ -133,7 +136,7 @@ export default class AlpacaMapMarker extends LitElement {
 
       <div class="details">
         <h4>${this.name}</h4>
-        ${this.city}
+        <address>${this.city}</address>
         <address>${this.address}</address>
         <address>
           <a
