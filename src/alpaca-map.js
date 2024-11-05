@@ -4,6 +4,7 @@ import { MarkerClusterer } from "@googlemaps/markerclusterer";
 import { Loader } from "@googlemaps/js-api-loader";
 
 import STYLED_MAP_TYPE from "./styles-map.js";
+import stylesMapMarker from "./styles-map-marker.js";
 import "./alpaca-map-marker.js";
 import "./alpaca-map-icon.js";
 
@@ -63,6 +64,30 @@ export default class AlpacaMap extends LitElement {
 
         --private-farm: var(--brown);
         --public-farm: var(--green);
+
+        /* From fontawesome website design */
+        --rgb-gray-50: 240 241 243;
+        --rgb-gray-100: 224 226 232;
+        --rgb-gray-200: 195 198 209;
+        --rgb-gray-300: 165 171 187;
+        --rgb-gray-400: 165 171 187;
+        --rgb-gray-500: 97 109 138;
+        --rgb-gray-600: 81 94 123;
+        --rgb-gray-700: 54 71 103;
+        --rgb-gray-800: 24 49 83;
+        --rgb-gray-900: 0 28 64;
+        --white: var(--oc-white);
+        --black: var(--oc-black);
+        --gray-50: rgb(var(--rgb-gray-50));
+        --gray-100: rgb(var(--rgb-gray-100));
+        --gray-200: rgb(var(--rgb-gray-200));
+        --gray-300: rgb(var(--rgb-gray-300));
+        --gray-400: rgb(var(--rgb-gray-400));
+        --gray-500: rgb(var(--rgb-gray-500));
+        --gray-600: rgb(var(--rgb-gray-600));
+        --gray-700: rgb(var(--rgb-gray-700));
+        --gray-800: rgb(var(--rgb-gray-800));
+        --gray-900: rgb(var(--rgb-gray-900));
       }
 
       /* Custom minimalistic scrollbar */
@@ -191,6 +216,7 @@ export default class AlpacaMap extends LitElement {
         background-color: var(--pale-blue);
       }
     `,
+    stylesMapMarker,
   ];
 
   constructor() {

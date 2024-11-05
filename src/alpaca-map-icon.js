@@ -51,6 +51,12 @@ export default class AlpacaMapIcon extends LitElement {
     return html`<svg class="icon" viewBox="0 0 640 512">${path}</svg>`;
   }
 
+  _iconCar() {
+    const path = svg`<path d="M135.2 117.4L109.1 192l293.8 0-26.1-74.6C372.3 104.6 360.2 96 346.6 96L165.4 96c-13.6 0-25.7 8.6-30.2 21.4zM39.6 196.8L74.8 96.3C88.3 57.8 124.6 32 165.4 32l181.2 0c40.8 0 77.1 25.8 90.6 64.3l35.2 100.5c23.2 9.6 39.6 32.5 39.6 59.2l0 144 0 48c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32l0-48L96 400l0 48c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32l0-48L0 256c0-26.7 16.4-49.6 39.6-59.2zM128 288a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm288 32a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"/>`;
+
+    return html`<svg class="icon" viewBox="0 0 640 512">${path}</svg>`;
+  }
+
   _iconCalendarCheck() {
     const path = svg`<path d="M128 0c17.7 0 32 14.3 32 32V64H288V32c0-17.7 14.3-32 32-32s32 14.3 32 32V64h48c26.5 0 48 21.5 48 48v48H0V112C0 85.5 21.5 64 48 64H96V32c0-17.7 14.3-32 32-32zM0 192H448V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V192zM329 305c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-95 95-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L329 305z"/>`;
 
@@ -73,6 +79,12 @@ export default class AlpacaMapIcon extends LitElement {
     const path = svg`<path d="M336 352c97.2 0 176-78.8 176-176S433.2 0 336 0S160 78.8 160 176c0 18.7 2.9 36.8 8.3 53.7L7 391c-4.5 4.5-7 10.6-7 17v80c0 13.3 10.7 24 24 24h80c13.3 0 24-10.7 24-24V448h40c13.3 0 24-10.7 24-24V384h40c6.4 0 12.5-2.5 17-7l33.3-33.3c16.9 5.4 35 8.3 53.7 8.3zM376 96a40 40 0 1 1 0 80 40 40 0 1 1 0-80z"/>`;
 
     return html`<svg class="icon private" viewBox="0 0 640 512">${path}</svg>`;
+  }
+
+  _iconLocationDot() {
+    const path = svg`<path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/>`;
+
+    return html`<svg class="icon" viewBox="0 0 640 512">${path}</svg>`;
   }
 
   _iconMars() {
@@ -102,6 +114,9 @@ export default class AlpacaMapIcon extends LitElement {
       case "bed":
         icon = this._iconBed();
         break;
+      case "car":
+        icon = this._iconCar();
+        break;
       case "calendarCheck":
         icon = this._iconCalendarCheck();
         break;
@@ -113,6 +128,9 @@ export default class AlpacaMapIcon extends LitElement {
         break;
       case "key":
         icon = this._iconKey();
+        break;
+      case "locationDot":
+        icon = this._iconLocationDot();
         break;
       case "mars":
         icon = this._iconMars();

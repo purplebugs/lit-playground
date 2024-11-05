@@ -21,104 +21,6 @@ export default class AlpacaMapMarker extends LitElement {
     } /* If a property changes the element re-renders */,
   };
 
-  static styles = [
-    css`
-      /********* Farm styles in unhighlighted state *********/
-      /* Ref: https://developers.google.com/maps/documentation/javascript/advanced-markers/html-markers#maps_advanced_markers_html-css */
-
-      .farm {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        background-color: white;
-        border-radius: 1rem;
-        box-shadow: 10px 10px 5px #0003;
-        color: var(--almost-black);
-
-        /* Avoid font flicker when load */
-        /* font-family: sans-serif; */
-
-        padding: 0.75rem;
-
-        width: auto;
-        max-width: 15rem;
-      }
-
-      .farm::after {
-        border-left: 9px solid transparent;
-        border-right: 9px solid transparent;
-        content: "";
-        height: 0;
-        left: 50%;
-        position: absolute;
-        top: 100%;
-        transform: translate(-50%);
-        width: 0;
-        z-index: 1;
-      }
-
-      .farm .summary {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        font-size: 1.5rem;
-        gap: 0.5rem;
-      }
-
-      .farm .details {
-        display: none;
-        flex-direction: column;
-        flex: 1;
-        gap: 1rem;
-        padding: 0rem 1rem 0rem 1rem;
-        font-size: medium;
-      }
-
-      .icon {
-        position: relative;
-        margin-left: 0.5rem;
-      }
-
-      .link-arrow {
-        top: 0.25rem;
-      }
-
-      /********* Farm styles in highlighted state *********/
-
-      /*       .farm.highlight {
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
-        height: 80px;
-        padding: 8px 15px;
-        width: auto;
-      } */
-
-      .farm.highlight .details {
-        display: flex;
-      }
-
-      /********* Farm category colours *********/
-      .farm.private {
-        border: 0.2em solid var(--private-farm);
-      }
-
-      .farm.public {
-        border: 0.2em solid var(--public-farm);
-      }
-
-      .farm.private::after {
-        border-top: 9px solid var(--private-farm);
-      }
-
-      .farm.public::after {
-        border-top: 9px solid var(--public-farm);
-      }
-    `,
-  ];
-
   constructor() {
     super();
     this.name;
@@ -137,31 +39,55 @@ export default class AlpacaMapMarker extends LitElement {
     super.connectedCallback();
   }
 
+  createRenderRoot() {
+    // Turns off shadow DOM.
+    // Since AlpacaMapMarker is not used externally, only by AlpacaMap then we want to inherit all styling, so turn off shadow DOM.
+    return this;
+  }
+
   render() {
-    return html` <div class="farm ${this.category} ${this.highlight}">
+    return html` <div class="farm-marker ${this.category} ${this.highlight}">
       <div class="summary">
-        <alpaca-map-icon
-          icon="${this.category === "private" ? "key" : "houseFlag"}"
-        ></alpaca-map-icon>
+        <div class="icon">
+          <alpaca-map-icon
+            icon="${this.category === "private" ? "key" : "houseFlag"}"
+          ></alpaca-map-icon>
+        </div>
         <div class="count">${this.count} 🦙</div>
       </div>
 
-      <div class="details">
-        <h4>${this.name}</h4>
-        <address>${this.city}</address>
-        <address>${this.address}</address>
-        <address>
-          <a
-            href="${this.directions}"
-            target="_blank"
-            rel="noreferrer"
-            title="Google directions"
-            >Directions<alpaca-map-icon
-              icon="arrowUpRightFromSquare"
-              class="icon link-arrow"
-            ></alpaca-map-icon>
-          </a>
-        </address>
+      <div class="more-info ${this.highlight}">
+        <div class="name">
+          <h2>${this.name}</h2>
+        </div>
+
+        <div class="city">
+          <address>
+            <alpaca-map-icon icon="locationDot"></alpaca-map-icon>${this.city}
+          </address>
+        </div>
+
+        <div class="address">
+          <address>${this.address}</address>
+        </div>
+
+        <a
+          href="${this.directions}"
+          target="_blank"
+          rel="noreferrer"
+          title="Google directions"
+        >
+          <div class="farm-marker-link">
+            <address class="directions">
+              <alpaca-map-icon icon="car" class="icon"></alpaca-map-icon
+              ><span>Directions</span
+              ><alpaca-map-icon
+                icon="arrowUpRightFromSquare"
+                class="icon link-arrow"
+              ></alpaca-map-icon>
+            </address>
+          </div>
+        </a>
       </div>
     </div>`;
   }
