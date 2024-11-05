@@ -43,9 +43,20 @@ export default class AlpacaMapMarker extends LitElement {
 
   renderLinkToFarmPage() {
     if (this.linkToFarmPage) {
-      return html` <address>
-        <a href="https://www.alpaca.life/farm/${this.id}">Farm info</a>
-      </address>`;
+      return html`
+        <a
+          href="https://www.alpaca.life/farm/${this.id}"
+          onclick="event.stopPropagation()"
+        >
+          <div class="farm-marker-link">
+            <address class="farm-info">
+              <span class="icon"
+                ><alpaca-map-icon icon="circleInfo"></alpaca-map-icon></span
+              ><span class="text">Farm info</span>
+            </address>
+          </div>
+        </a>
+      `;
     }
 
     return html`${nothing}`;
@@ -79,19 +90,20 @@ export default class AlpacaMapMarker extends LitElement {
         <div class="address">
           <address>${this.address}</address>
         </div>
-        
-       ${this.renderLinkToFarmPage()}
-                
+
+        ${this.renderLinkToFarmPage()}
+
         <a
           href="${this.directions}"
           target="_blank"
           rel="noreferrer"
           title="Google directions"
+          onclick="event.stopPropagation()"
         >
           <div class="farm-marker-link">
             <address class="directions">
               <alpaca-map-icon icon="car" class="icon"></alpaca-map-icon
-              ><span>Directions</span
+              ><span class="text">Directions</span
               ><alpaca-map-icon
                 icon="arrowUpRightFromSquare"
                 class="icon link-arrow"
