@@ -14,6 +14,7 @@ export default class AlpacaMap extends LitElement {
     centerLng: { type: Number },
     dataSource: { type: String },
     assetSource: { type: String },
+    linkToFarmPage: { type: Boolean },
   };
 
   static styles = [
@@ -201,6 +202,7 @@ export default class AlpacaMap extends LitElement {
     this.centerLng = 8.4689;
     this.dataSource = "http://localhost:3000/api/companies"; // TODO set default depending on environment
     this.assetSource = "https://www.alpaca.life/assets";
+    this.linkToFarmPage = true;
 
     this.farms = [];
     this.cluster = null;
@@ -277,6 +279,7 @@ export default class AlpacaMap extends LitElement {
 
     const markers = this.farms.map((farm) => {
       const content = document.createElement("alpaca-map-marker");
+      content.setAttribute("id", farm?.id);
       content.setAttribute("name", farm?.name);
       content.setAttribute(
         "category",

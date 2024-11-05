@@ -3,6 +3,7 @@ import "./alpaca-map-icon.js";
 
 export default class AlpacaMapMarker extends LitElement {
   static properties = {
+    id: { type: Number },
     name: { type: String },
     category: { type: String },
     count: { type: Number },
@@ -150,6 +151,11 @@ export default class AlpacaMapMarker extends LitElement {
         <h4>${this.name}</h4>
         <address>${this.city}</address>
         <address>${this.address}</address>
+        <!-- TODO: START. Only include this if "linkToFarmPage" attribute is true -->
+        <address>
+          <a href="https://www.alpaca.life/farm/${this.id}">Farm info</a>
+        </address>
+        <!-- TODO: END -->
         <address>
           <a
             href="${this.directions}"
