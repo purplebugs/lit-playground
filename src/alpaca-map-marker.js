@@ -36,6 +36,9 @@ export default class AlpacaMapMarker extends LitElement {
         box-shadow: 10px 10px 5px #0003;
         color: var(--almost-black);
 
+        /* Avoid font flicker when load */
+        /* font-family: sans-serif; */
+
         padding: 0.75rem;
 
         width: auto;
@@ -68,6 +71,18 @@ export default class AlpacaMapMarker extends LitElement {
         display: none;
         flex-direction: column;
         flex: 1;
+        gap: 1rem;
+        padding: 0rem 1rem 0rem 1rem;
+        font-size: medium;
+      }
+
+      .icon {
+        position: relative;
+        margin-left: 0.5rem;
+      }
+
+      .link-arrow {
+        top: 0.25rem;
       }
 
       /********* Farm styles in highlighted state *********/
@@ -133,7 +148,7 @@ export default class AlpacaMapMarker extends LitElement {
 
       <div class="details">
         <h4>${this.name}</h4>
-        ${this.city}
+        <address>${this.city}</address>
         <address>${this.address}</address>
         <address>
           <a
@@ -141,8 +156,11 @@ export default class AlpacaMapMarker extends LitElement {
             target="_blank"
             rel="noreferrer"
             title="Google directions"
-            >Directions</a
-          >
+            >Directions<alpaca-map-icon
+              icon="arrowUpRightFromSquare"
+              class="icon link-arrow"
+            ></alpaca-map-icon>
+          </a>
         </address>
       </div>
     </div>`;
