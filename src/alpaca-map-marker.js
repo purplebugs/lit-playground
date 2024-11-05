@@ -106,6 +106,7 @@ export default class AlpacaMapMarker extends LitElement {
           display: flex;
           flex-basis: auto;
           align-items: center;
+          padding: 0 0.25rem 0 0;
         }
 
         /* Icons */
