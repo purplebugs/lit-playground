@@ -85,7 +85,7 @@ export default class AlpacaMapMarker extends LitElement {
       >
         <div class="farm-marker-link">
           <address class="webpage">
-            <alpaca-map-icon icon="car" class="icon"></alpaca-map-icon
+            <alpaca-map-icon icon="globe" class="icon"></alpaca-map-icon
             ><span class="text">Webpage</span
             ><alpaca-map-icon
               icon="arrowUpRightFromSquare"
