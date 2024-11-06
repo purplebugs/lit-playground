@@ -319,6 +319,10 @@ export default class AlpacaMap extends LitElement {
         "address",
         farm?.location?.google?.formatted_address
       );
+
+      content.setAttribute("url_full", farm?.url?.full);
+      content.setAttribute("url_pretty", farm?.url?.pretty);
+
       content.setAttribute(
         "directions",
         farm?.location?.google?.directions_url_href

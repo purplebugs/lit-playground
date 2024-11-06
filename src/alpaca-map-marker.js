@@ -9,6 +9,8 @@ export default class AlpacaMapMarker extends LitElement {
     count: { type: Number },
     city: { type: String },
     address: { type: String },
+    url_full: { type: String },
+    url_pretty: { type: String },
     directions: { type: String },
     highlight: {
       type: String,
@@ -30,6 +32,8 @@ export default class AlpacaMapMarker extends LitElement {
     this.count;
     this.city;
     this.address;
+    this.url_full;
+    this.url_pretty;
     this.directions;
     this.highlight = false;
   }
@@ -62,6 +66,37 @@ export default class AlpacaMapMarker extends LitElement {
     return html`${nothing}`;
   }
 
+  renderLinkToWebPage() {
+    if (this.url_full === null || this.url_full === undefined) {
+      return html`${nothing}`;
+    }
+
+    if (this.url_pretty === null || this.url_pretty === undefined) {
+      return html`${nothing}`;
+    }
+
+    return html`
+      <a
+        href="${this.url_full}"
+        target="_blank"
+        rel="noreferrer"
+        title="${this.url_pretty}"
+        onclick="event.stopPropagation()"
+      >
+        <div class="farm-marker-link">
+          <address class="webpage">
+            <alpaca-map-icon icon="globe" class="icon"></alpaca-map-icon
+            ><span class="text">Webpage</span
+            ><alpaca-map-icon
+              icon="arrowUpRightFromSquare"
+              class="icon link-arrow"
+            ></alpaca-map-icon>
+          </address>
+        </div>
+      </a>
+    `;
+  }
+
   createRenderRoot() {
     // Turns off shadow DOM.
     // Since AlpacaMapMarker is not used externally, only by AlpacaMap then we want to inherit all styling, so turn off shadow DOM.
@@ -91,7 +126,7 @@ export default class AlpacaMapMarker extends LitElement {
           <address>${this.address}</address>
         </div>
 
-        ${this.renderLinkToFarmPage()}
+        ${this.renderLinkToFarmPage()} ${this.renderLinkToWebPage()}
 
         <a
           href="${this.directions}"
