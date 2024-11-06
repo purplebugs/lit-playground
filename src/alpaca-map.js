@@ -303,6 +303,8 @@ export default class AlpacaMap extends LitElement {
     this.map.mapTypes.set("styled_map", styledMapType);
     this.map.setMapTypeId("styled_map");
 
+    let zIndexMax = Number(10000000);
+
     const markers = this.farms.map((farm) => {
       const content = document.createElement("alpaca-map-marker");
       content.setAttribute("linkToFarmPage", this.linkToFarmPage);
@@ -333,6 +335,7 @@ export default class AlpacaMap extends LitElement {
         content,
         position: farm.location.lat_lng,
         title: farm?.name,
+        zIndex: zIndexMax,
       });
 
       // markers can only be keyboard focusable when they have click listeners
@@ -340,9 +343,12 @@ export default class AlpacaMap extends LitElement {
       // toggle marker summary/details when marker is clicked
       marker.addListener("click", () => {
         const highlighted = marker.content.getAttribute("highlight");
+        zIndexMax = Number(zIndexMax + 1);
+
         if (highlighted === "true") {
           marker.content.setAttribute("highlight", "false");
         } else {
+          marker.zIndex = Number(zIndexMax);
           marker.content.setAttribute("highlight", "true");
         }
       });
