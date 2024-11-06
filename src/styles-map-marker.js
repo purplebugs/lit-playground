@@ -83,6 +83,7 @@ export default css`
 
     .city address,
     .farm-info,
+    .webpage,
     .directions {
       display: flex;
       flex-basis: auto;
